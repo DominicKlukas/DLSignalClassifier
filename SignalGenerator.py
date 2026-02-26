@@ -59,3 +59,28 @@ class SignalGenerator:
         # Upsampling using RRC fitler
         rrc = self.gen_rrc(cnfg.sps, cnfg.pulse_shaping_filter_num_taps)
         signal = sc.convolve(symbols, rrc, mode = 'valid')
+
+        # Adding white noise
+
+        #Compute the standard deviation for the requested SNR
+        signal_power = np.mean(signal**2)
+        snr_linear = 10**(cnfg.SNR / 10)
+        noise_power = signal_power / snr_linear
+        sigma = np.sqrt(noise_power)
+        #Generate the white noise
+        noise = (np.random.normal(0, sigma/np.sqrt(2), signal.shape) +
+         1j*np.random.normal(0, sigma/np.sqrt(2), signal.shape))
+        signal = signal+noise
+
+
+        # Apply transformations
+        # Phase Transormation
+        rotation = np.exp(1j * cnfg.phase_shift)
+        signal = rotation*signal
+
+        # Frequency Offset
+        f_s = cnfg.sps_int*cnfg.symbol_rate  # frequency of the "continuous" signal
+        n = np.arange(len(signal))
+        freq_offset = np.exp(1j*(cnfg.frequency_offset/f_s)*2*np.pi*n)
+        ## TODO:  Resample to the final signal sample rate
+        return signal
