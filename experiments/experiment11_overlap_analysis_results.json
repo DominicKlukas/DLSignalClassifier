@@ -1,0 +1,374 @@
+{
+  "experiment": "experiment11_correct_set_overlap_analysis",
+  "datasets": {
+    "modulation_family": {
+      "train_examples": 2400,
+      "val_examples": 300,
+      "test_examples": 300,
+      "signal_length": 1024,
+      "epochs": 40,
+      "batch_size": 128,
+      "iq_expert": {
+        "best_epoch": 26,
+        "val_acc": 0.74,
+        "test_acc": 0.7366666666666667
+      },
+      "fft_expert": {
+        "best_epoch": 11,
+        "val_acc": 0.18666666666666668,
+        "test_acc": 0.17666666666666667
+      },
+      "fusion_model": {
+        "best_epoch": 1,
+        "val_acc": 0.7266666666666667,
+        "test_acc": 0.7466666666666667
+      },
+      "overlap": {
+        "num_test_examples": 300,
+        "iq_correct": 221,
+        "fft_correct": 53,
+        "fusion_correct": 224,
+        "expert_union_correct": 237,
+        "expert_intersection_correct": 37,
+        "fusion_covers_expert_union": 218,
+        "fusion_misses_from_expert_union": 19,
+        "fusion_extra_beyond_expert_union": 6,
+        "pattern_counts": {
+          "000": 57,
+          "100": 5,
+          "010": 13,
+          "001": 6,
+          "110": 1,
+          "101": 179,
+          "011": 3,
+          "111": 36
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/modulation_family_overlap.png",
+      "runtime_seconds": 24.649636607999128
+    },
+    "waveform_family": {
+      "train_examples": 3200,
+      "val_examples": 400,
+      "test_examples": 400,
+      "signal_length": 1024,
+      "epochs": 40,
+      "batch_size": 128,
+      "iq_expert": {
+        "best_epoch": 26,
+        "val_acc": 0.5725,
+        "test_acc": 0.575
+      },
+      "fft_expert": {
+        "best_epoch": 37,
+        "val_acc": 0.7425,
+        "test_acc": 0.75
+      },
+      "fusion_model": {
+        "best_epoch": 9,
+        "val_acc": 0.8775,
+        "test_acc": 0.885
+      },
+      "overlap": {
+        "num_test_examples": 400,
+        "iq_correct": 230,
+        "fft_correct": 300,
+        "fusion_correct": 354,
+        "expert_union_correct": 355,
+        "expert_intersection_correct": 175,
+        "fusion_covers_expert_union": 341,
+        "fusion_misses_from_expert_union": 14,
+        "fusion_extra_beyond_expert_union": 13,
+        "pattern_counts": {
+          "000": 32,
+          "100": 8,
+          "010": 6,
+          "001": 13,
+          "110": 0,
+          "101": 47,
+          "011": 119,
+          "111": 175
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/waveform_family_overlap.png",
+      "runtime_seconds": 29.70087677599804
+    },
+    "subghz_real_128": {
+      "train_examples": 9600,
+      "val_examples": 3200,
+      "test_examples": 3200,
+      "signal_length": 1024,
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 9,
+        "val_acc": 0.784375,
+        "test_acc": 0.8065625
+      },
+      "fft_expert": {
+        "best_epoch": 11,
+        "val_acc": 0.748125,
+        "test_acc": 0.76375
+      },
+      "fusion_model": {
+        "best_epoch": 4,
+        "val_acc": 0.795625,
+        "test_acc": 0.8125
+      },
+      "overlap": {
+        "num_test_examples": 3200,
+        "iq_correct": 2581,
+        "fft_correct": 2444,
+        "fusion_correct": 2600,
+        "expert_union_correct": 2609,
+        "expert_intersection_correct": 2416,
+        "fusion_covers_expert_union": 2562,
+        "fusion_misses_from_expert_union": 47,
+        "fusion_extra_beyond_expert_union": 38,
+        "pattern_counts": {
+          "000": 553,
+          "100": 24,
+          "010": 21,
+          "001": 38,
+          "110": 2,
+          "101": 141,
+          "011": 7,
+          "111": 2414
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_128_overlap.png",
+      "runtime_seconds": 29.53476873999898
+    },
+    "subghz_real_512": {
+      "train_examples": 38400,
+      "val_examples": 12800,
+      "test_examples": 12800,
+      "signal_length": 1024,
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 6,
+        "val_acc": 0.800703125,
+        "test_acc": 0.8184375
+      },
+      "fft_expert": {
+        "best_epoch": 14,
+        "val_acc": 0.777109375,
+        "test_acc": 0.8159375
+      },
+      "fusion_model": {
+        "best_epoch": 1,
+        "val_acc": 0.800234375,
+        "test_acc": 0.8234375
+      },
+      "overlap": {
+        "num_test_examples": 12800,
+        "iq_correct": 10476,
+        "fft_correct": 10444,
+        "fusion_correct": 10540,
+        "expert_union_correct": 10585,
+        "expert_intersection_correct": 10335,
+        "fusion_covers_expert_union": 10540,
+        "fusion_misses_from_expert_union": 45,
+        "fusion_extra_beyond_expert_union": 0,
+        "pattern_counts": {
+          "000": 2215,
+          "100": 38,
+          "010": 7,
+          "001": 0,
+          "110": 0,
+          "101": 103,
+          "011": 102,
+          "111": 10335
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_512_overlap.png",
+      "runtime_seconds": 93.89966212399668
+    },
+    "subghz_real_1024_40ep": {
+      "train_examples": 76800,
+      "val_examples": 25600,
+      "test_examples": 25600,
+      "signal_length": 1024,
+      "epochs": 40,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 5,
+        "val_acc": 0.7975,
+        "test_acc": 0.8143359375
+      },
+      "fft_expert": {
+        "best_epoch": 13,
+        "val_acc": 0.7793359375,
+        "test_acc": 0.817578125
+      },
+      "fusion_model": {
+        "best_epoch": 1,
+        "val_acc": 0.7917578125,
+        "test_acc": 0.820703125
+      },
+      "overlap": {
+        "num_test_examples": 25600,
+        "iq_correct": 20847,
+        "fft_correct": 20930,
+        "fusion_correct": 21010,
+        "expert_union_correct": 21073,
+        "expert_intersection_correct": 20704,
+        "fusion_covers_expert_union": 21007,
+        "fusion_misses_from_expert_union": 66,
+        "fusion_extra_beyond_expert_union": 3,
+        "pattern_counts": {
+          "000": 4524,
+          "100": 26,
+          "010": 40,
+          "001": 3,
+          "110": 0,
+          "101": 117,
+          "011": 186,
+          "111": 20704
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_1024_40ep_overlap.png",
+      "runtime_seconds": 402.100852364998
+    },
+    "subghz_real_augmented_512": {
+      "train_examples": 38400,
+      "val_examples": 12800,
+      "test_examples": 12800,
+      "signal_length": 1024,
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 17,
+        "val_acc": 0.776640625,
+        "test_acc": 0.79625
+      },
+      "fft_expert": {
+        "best_epoch": 19,
+        "val_acc": 0.782265625,
+        "test_acc": 0.795625
+      },
+      "fusion_model": {
+        "best_epoch": 1,
+        "val_acc": 0.792421875,
+        "test_acc": 0.81171875
+      },
+      "overlap": {
+        "num_test_examples": 12800,
+        "iq_correct": 10192,
+        "fft_correct": 10184,
+        "fusion_correct": 10390,
+        "expert_union_correct": 10579,
+        "expert_intersection_correct": 9797,
+        "fusion_covers_expert_union": 10390,
+        "fusion_misses_from_expert_union": 189,
+        "fusion_extra_beyond_expert_union": 0,
+        "pattern_counts": {
+          "000": 2221,
+          "100": 115,
+          "010": 74,
+          "001": 0,
+          "110": 0,
+          "101": 280,
+          "011": 313,
+          "111": 9797
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_augmented_512_overlap.png",
+      "runtime_seconds": 85.74956554100208
+    },
+    "orbit_rf": {
+      "train_examples": 43742,
+      "val_examples": 14372,
+      "test_examples": 14643,
+      "signal_length": 256,
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 12,
+        "val_acc": 0.7453381575285277,
+        "test_acc": 0.6679642149832684
+      },
+      "fft_expert": {
+        "best_epoch": 12,
+        "val_acc": 0.7658641803506819,
+        "test_acc": 0.6822372464658881
+      },
+      "fusion_model": {
+        "best_epoch": 15,
+        "val_acc": 0.7576537712218202,
+        "test_acc": 0.6928908010653555
+      },
+      "overlap": {
+        "num_test_examples": 14643,
+        "iq_correct": 9781,
+        "fft_correct": 9990,
+        "fusion_correct": 10146,
+        "expert_union_correct": 10920,
+        "expert_intersection_correct": 8851,
+        "fusion_covers_expert_union": 10054,
+        "fusion_misses_from_expert_union": 866,
+        "fusion_extra_beyond_expert_union": 92,
+        "pattern_counts": {
+          "000": 3631,
+          "100": 567,
+          "010": 269,
+          "001": 92,
+          "110": 30,
+          "101": 363,
+          "011": 870,
+          "111": 8821
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/orbit_rf_overlap.png",
+      "runtime_seconds": 101.86625797200031
+    },
+    "captured_npy_real_128": {
+      "train_examples": 84096,
+      "val_examples": 28032,
+      "test_examples": 28032,
+      "signal_length": 1024,
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 17,
+        "val_acc": 0.9486658105022832,
+        "test_acc": 0.9606877853881278
+      },
+      "fft_expert": {
+        "best_epoch": 20,
+        "val_acc": 0.8230950342465754,
+        "test_acc": 0.8275542237442922
+      },
+      "fusion_model": {
+        "best_epoch": 19,
+        "val_acc": 0.9572631278538812,
+        "test_acc": 0.9719606164383562
+      },
+      "overlap": {
+        "num_test_examples": 28032,
+        "iq_correct": 26930,
+        "fft_correct": 23198,
+        "fusion_correct": 27246,
+        "expert_union_correct": 27290,
+        "expert_intersection_correct": 22838,
+        "fusion_covers_expert_union": 27019,
+        "fusion_misses_from_expert_union": 271,
+        "fusion_extra_beyond_expert_union": 227,
+        "pattern_counts": {
+          "000": 515,
+          "100": 88,
+          "010": 146,
+          "001": 227,
+          "110": 37,
+          "101": 4004,
+          "011": 214,
+          "111": 22801
+        }
+      },
+      "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/captured_npy_real_128_overlap.png",
+      "runtime_seconds": 205.317797478001
+    }
+  },
+  "runtime_seconds": 992.4056111890022
+}

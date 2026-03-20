@@ -1,0 +1,191 @@
+{
+  "experiment": "fixed_hidden_feature_fusion_depth_study",
+  "tap_specs": {
+    "block1": 32,
+    "block2": 64,
+    "block3": 128,
+    "final": 256
+  },
+  "projection_dim": 128,
+  "head_hidden_dim": 128,
+  "head_dropout": 0.2,
+  "datasets": {
+    "waveform_family": {
+      "train_examples": 3200,
+      "val_examples": 400,
+      "test_examples": 400,
+      "signal_length": 1024,
+      "class_names": [
+        "CW",
+        "AM",
+        "FM",
+        "OFDM",
+        "LFM_CHIRP",
+        "DSSS",
+        "FHSS",
+        "SC_BURST"
+      ],
+      "epochs": 40,
+      "batch_size": 128,
+      "iq_expert": {
+        "best_epoch": 29,
+        "val_acc": 0.59,
+        "test_acc": 0.5975,
+        "macro_f1": 0.5905355813113687,
+        "weighted_f1": 0.5905355813113686
+      },
+      "fft_expert": {
+        "best_epoch": 33,
+        "val_acc": 0.71,
+        "test_acc": 0.6975,
+        "macro_f1": 0.699147352562359,
+        "weighted_f1": 0.699147352562359
+      },
+      "best_single_test_acc": 0.6975,
+      "best_tap_name": "final",
+      "best_tap_result": {
+        "tap_name": "final",
+        "best_epoch": 23,
+        "val_acc": 0.895,
+        "test_acc": 0.8775,
+        "macro_f1": 0.877970068762161,
+        "weighted_f1": 0.8779700687621609,
+        "delta_vs_best_single": 0.17999999999999994
+      },
+      "tap_results": {
+        "block1": {
+          "tap_name": "block1",
+          "best_epoch": 22,
+          "val_acc": 0.4275,
+          "test_acc": 0.48,
+          "macro_f1": 0.4654191211041428,
+          "weighted_f1": 0.4654191211041428,
+          "delta_vs_best_single": -0.21750000000000003
+        },
+        "block2": {
+          "tap_name": "block2",
+          "best_epoch": 27,
+          "val_acc": 0.79,
+          "test_acc": 0.7525,
+          "macro_f1": 0.7509977178980896,
+          "weighted_f1": 0.7509977178980897,
+          "delta_vs_best_single": 0.05499999999999994
+        },
+        "block3": {
+          "tap_name": "block3",
+          "best_epoch": 34,
+          "val_acc": 0.88,
+          "test_acc": 0.8725,
+          "macro_f1": 0.8727850071804593,
+          "weighted_f1": 0.8727850071804591,
+          "delta_vs_best_single": 0.17500000000000004
+        },
+        "final": {
+          "tap_name": "final",
+          "best_epoch": 23,
+          "val_acc": 0.895,
+          "test_acc": 0.8775,
+          "macro_f1": 0.877970068762161,
+          "weighted_f1": 0.8779700687621609,
+          "delta_vs_best_single": 0.17999999999999994
+        }
+      },
+      "mixture_reference": {
+        "test_acc": 0.885,
+        "macro_f1": 0.885792816386398,
+        "weighted_f1": 0.885792816386398,
+        "delta_vs_best_single": 0.135
+      },
+      "best_tap_vs_mixture": -0.007500000000000062,
+      "runtime_seconds": 74.02683073400112
+    },
+    "subghz_real_128": {
+      "train_examples": 9600,
+      "val_examples": 3200,
+      "test_examples": 3200,
+      "signal_length": 1024,
+      "class_names": [
+        "80211ah",
+        "802154g",
+        "Lora",
+        "Noise",
+        "Sigfox",
+        "sunOFDM"
+      ],
+      "epochs": 20,
+      "batch_size": 256,
+      "iq_expert": {
+        "best_epoch": 14,
+        "val_acc": 0.79125,
+        "test_acc": 0.8078125,
+        "macro_f1": 0.5942855815734727,
+        "weighted_f1": 0.7873295766984867
+      },
+      "fft_expert": {
+        "best_epoch": 4,
+        "val_acc": 0.7521875,
+        "test_acc": 0.775,
+        "macro_f1": 0.40010689160138035,
+        "weighted_f1": 0.7300896202681989
+      },
+      "best_single_test_acc": 0.8078125,
+      "best_tap_name": "final",
+      "best_tap_result": {
+        "tap_name": "final",
+        "best_epoch": 16,
+        "val_acc": 0.795625,
+        "test_acc": 0.81375,
+        "macro_f1": 0.609713493632032,
+        "weighted_f1": 0.7932937366982287,
+        "delta_vs_best_single": 0.005937499999999929
+      },
+      "tap_results": {
+        "block1": {
+          "tap_name": "block1",
+          "best_epoch": 18,
+          "val_acc": 0.7903125,
+          "test_acc": 0.8034375,
+          "macro_f1": 0.5755899671383401,
+          "weighted_f1": 0.7798978856258316,
+          "delta_vs_best_single": -0.004375000000000018
+        },
+        "block2": {
+          "tap_name": "block2",
+          "best_epoch": 17,
+          "val_acc": 0.7846875,
+          "test_acc": 0.8059375,
+          "macro_f1": 0.5446028410498098,
+          "weighted_f1": 0.7752776373219035,
+          "delta_vs_best_single": -0.001875000000000071
+        },
+        "block3": {
+          "tap_name": "block3",
+          "best_epoch": 6,
+          "val_acc": 0.79375,
+          "test_acc": 0.813125,
+          "macro_f1": 0.6128470897456685,
+          "weighted_f1": 0.7930409256007224,
+          "delta_vs_best_single": 0.005312499999999942
+        },
+        "final": {
+          "tap_name": "final",
+          "best_epoch": 16,
+          "val_acc": 0.795625,
+          "test_acc": 0.81375,
+          "macro_f1": 0.609713493632032,
+          "weighted_f1": 0.7932937366982287,
+          "delta_vs_best_single": 0.005937499999999929
+        }
+      },
+      "mixture_reference": {
+        "test_acc": 0.8125,
+        "macro_f1": 0.6154509442667907,
+        "weighted_f1": 0.7923581623416649,
+        "delta_vs_best_single": 0.00593750000000004
+      },
+      "best_tap_vs_mixture": 0.0012499999999999734,
+      "runtime_seconds": 69.70206795000013
+    }
+  },
+  "runtime_seconds": 145.89736336299939
+}

@@ -1,0 +1,79 @@
+{
+  "dataset": {
+    "train_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/train.h5",
+    "val_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/val.h5",
+    "test_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/test.h5",
+    "window_length": 1024,
+    "max_windows_per_file": 512,
+    "class_names": [
+      "80211ah",
+      "802154g",
+      "Lora",
+      "Noise",
+      "Sigfox",
+      "sunOFDM"
+    ],
+    "train_windows": 38400,
+    "val_windows": 12800,
+    "test_windows": 12800,
+    "train_class_counts": {
+      "80211ah": 15360,
+      "802154g": 1536,
+      "Lora": 3072,
+      "Noise": 1536,
+      "Sigfox": 1536,
+      "sunOFDM": 15360
+    },
+    "val_class_counts": {
+      "80211ah": 5120,
+      "802154g": 512,
+      "Lora": 1024,
+      "Noise": 512,
+      "Sigfox": 512,
+      "sunOFDM": 5120
+    },
+    "test_class_counts": {
+      "80211ah": 5120,
+      "802154g": 512,
+      "Lora": 1024,
+      "Noise": 512,
+      "Sigfox": 512,
+      "sunOFDM": 5120
+    },
+    "train_source_files": 75,
+    "val_source_files": 25,
+    "test_source_files": 25
+  },
+  "time_cnn": {
+    "best_epoch": 17,
+    "val_acc": 0.776875,
+    "test_acc": 0.796640625,
+    "macro_f1": 0.5199637339030078,
+    "weighted_f1": 0.7656577167091285
+  },
+  "fft_cnn": {
+    "best_epoch": 18,
+    "val_acc": 0.771015625,
+    "test_acc": 0.775078125,
+    "macro_f1": 0.5235254129456802,
+    "weighted_f1": 0.7535747109290424
+  },
+  "gated_multimodal_cnn": {
+    "best_epoch": 12,
+    "val_acc": 0.8003125,
+    "test_acc": 0.825546875,
+    "macro_f1": 0.6596993854062878,
+    "weighted_f1": 0.8057564941695881,
+    "best_val_gate_weights": [
+      0.2778483333026106,
+      0.374334664296488,
+      0.3478170019651739
+    ],
+    "test_gate_weights": [
+      0.24862377944548114,
+      0.37092199371010365,
+      0.38045422659637096
+    ]
+  },
+  "runtime_seconds": 82.65405879500031
+}

@@ -1,0 +1,23 @@
+# Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# Local datasets and captured data
+data/
+CapturedData/
+orbit_rf_identification_dataset_updated/
+*old_experiments/
+
+# External datasets and vendored third-party repos
+external/
+
+# Generated experiment artifacts that are too large for GitHub
+experiments/**/__pycache__/
+experiments/experiment1/*.h5
+
+# OS/editor clutter
+.DS_Store
