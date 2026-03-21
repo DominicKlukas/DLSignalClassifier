@@ -54,7 +54,7 @@ Artifact:
 
 Reference comparison set:
 
-- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
+- [gated_iq_fft_comparison.md](benchmarks/gated_iq_fft_comparison.md)
 
 Results across all datasets in this comparison family:
 
@@ -93,7 +93,7 @@ Main artifact:
 
 Detailed write-up:
 
-- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
+- [frozen_expert_residual.md](benchmarks/frozen_expert_residual.md)
 
 Results across the full comparable benchmark family:
 
@@ -134,20 +134,20 @@ Interpretation:
 
 References:
 
-- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
+- [frozen_expert_residual.md](benchmarks/frozen_expert_residual.md)
 - [Deep Learning Based Automatic Modulation Recognition: Models, Datasets, and Challenges](https://ore.exeter.ac.uk/repository/bitstream/10871/131623/1/Deep%20Learning%20Based%20Automatic%20Modulation%20Recognition.pdf)
 - [A Novel Approach for Robust Automatic Modulation Recognition Based on Reversible Column Networks](https://www.mdpi.com/2079-9292/14/3/618)
 
 ## Recommended Reading Order
 
-- [Experiments.md](Experiments.md)
-- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
-- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
+- [experiments.md](experiments.md)
+- [gated_iq_fft_comparison.md](benchmarks/gated_iq_fft_comparison.md)
+- [frozen_expert_residual.md](benchmarks/frozen_expert_residual.md)
 
-## Interesting Appendix
+## Analysis Appendix
 
 This is not part of the core experiment sequence, but it sharpens the interpretation of Experiment 3:
 
-- [Experiment11_Correct_Set_Overlap_Log.md](Experiment11_Correct_Set_Overlap_Log.md)
+- [correct_set_overlap.md](analysis/correct_set_overlap.md)
 
 That analysis shows the frozen model wins in total accuracy, but it does not literally preserve the full union of IQ-correct and FFT-correct samples on every dataset.

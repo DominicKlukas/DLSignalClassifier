@@ -11,8 +11,9 @@ The main experimental sequence is:
 
 ## Start Here
 
-- Read [docs/Experiments.md](docs/Experiments.md) for the main experimental summary.
-- Read [docs/Datasets.md](docs/Datasets.md) for dataset provenance, classes, and placement details.
+- Read [docs/experiments.md](docs/experiments.md) for the main experimental summary.
+- Read [docs/datasets.md](docs/datasets.md) for dataset provenance, classes, and placement details.
+- Read [docs/README.md](docs/README.md) for the full documentation index.
 - Read [experiments/README.md](experiments/README.md) for the experiment layout.
 
 ## Fresh Clone Workflow
@@ -33,7 +34,7 @@ This reproduces Experiments 1 and 2 from a clean clone because those datasets ar
 ./.venv/bin/python experiments/check_data.py
 ```
 
-3. Retrieve and place the raw datasets using the instructions in [dataset_prep/README.md](dataset_prep/README.md) and [docs/Datasets.md](docs/Datasets.md).
+3. Retrieve and place the raw datasets using the instructions in [dataset_prep/README.md](dataset_prep/README.md) and [docs/datasets.md](docs/datasets.md).
 
 4. Re-run the full experiment sequence once those datasets are present:
 

@@ -15,7 +15,7 @@ The main experiment sequence lives in:
 - `experiments/exp02_gated_multimodal`
 - `experiments/exp03_frozen_expert_residual`
 
-These are the directories to use if someone wants to recreate the results discussed in `docs/Experiments.md`.
+These are the directories to use if someone wants to recreate the results discussed in `docs/experiments.md`.
 
 ### Fastest Way To Recreate The Main Experiments
 

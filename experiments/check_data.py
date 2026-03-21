@@ -21,7 +21,7 @@ def main() -> None:
     print("  - Experiment 1 can run from a clean clone because it generates its synthetic datasets.")
     print("  - Experiment 2 requires the Experiment 1 synthetic artifacts.")
     print("  - Experiment 3 requires the Sub-GHz HDF5 splits, ORBIT day files, and captured RTL-SDR HDF5 splits.")
-    print("  - See docs/Datasets.md for dataset provenance and placement details.")
+    print("  - See docs/datasets.md for dataset provenance and placement details.")
 
 
 if __name__ == "__main__":

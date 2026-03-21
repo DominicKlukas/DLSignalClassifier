@@ -4,7 +4,7 @@
 
 Test a safer multimodal architecture across the same dataset family collected in:
 
-- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
+- [gated_iq_fft_comparison.md](gated_iq_fft_comparison.md)
 
 The target hypothesis was:
 

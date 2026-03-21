@@ -353,7 +353,7 @@ def run_experiment(results_path: Path = RESULTS_PATH, orbit_max_packets_per_node
             "Experiment 3 requires local datasets that are not present.\n"
             "Missing paths:\n"
             f"{missing_text}\n\n"
-            "Run `./.venv/bin/python experiments/check_data.py` for a full audit and see docs/Datasets.md for dataset placement details."
+            "Run `./.venv/bin/python experiments/check_data.py` for a full audit and see docs/datasets.md for dataset placement details."
         )
 
     modulation = load_modulation_dataset()

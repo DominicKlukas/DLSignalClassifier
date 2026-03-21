@@ -19,8 +19,8 @@ It excludes experiments that changed the model family beyond that comparison, su
 
 Source experiments:
 
-- IQ and FFT baselines from [Experiments.md](Experiments.md)
-- gated multimodal result from [Experiments.md](Experiments.md)
+- IQ and FFT baselines from [experiments.md](../experiments.md)
+- gated multimodal result from [experiments.md](../experiments.md)
 
 Dataset characteristics:
 
@@ -54,8 +54,8 @@ Artifacts:
 
 Source experiments:
 
-- IQ and FFT baselines from [Experiments.md](Experiments.md)
-- gated multimodal result from [Experiments.md](Experiments.md)
+- IQ and FFT baselines from [experiments.md](../experiments.md)
+- gated multimodal result from [experiments.md](../experiments.md)
 
 Dataset characteristics:
 

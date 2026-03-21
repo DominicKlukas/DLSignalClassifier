@@ -54,7 +54,7 @@ def main() -> None:
                 "Experiment 3 requires local datasets that are not present in this clone.\n"
                 "Missing paths:\n"
                 f"{format_missing_paths(missing_for_exp03)}\n\n"
-                "Run `./.venv/bin/python experiments/check_data.py` for a full audit and see docs/Datasets.md for placement details."
+                "Run `./.venv/bin/python experiments/check_data.py` for a full audit and see docs/datasets.md for placement details."
             )
         skipped.append(
             {
