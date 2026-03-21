@@ -1,0 +1,61 @@
+{
+  "experiment": "frozen_expert_residual_occluded_objects",
+  "dataset": {
+    "train_examples": 120000,
+    "val_examples": 40000,
+    "test_examples": 40000,
+    "signal_length": 100,
+    "class_names": [
+      "ball",
+      "cable",
+      "calculator",
+      "deo",
+      "hammer",
+      "mug",
+      "plastic_cup",
+      "screwdriver",
+      "tape",
+      "waterbottle"
+    ],
+    "batch_size": 256,
+    "epochs": 80,
+    "dataset_root": "/home/klukasdh/Projects/DLSignalClassifier/external/radar_iq_datasets/data/occluded_object_classification_unpacked/64GHz",
+    "zip_path": "/home/klukasdh/Projects/DLSignalClassifier/external/radar_iq_datasets/data/occluded_object_classification.zip",
+    "train_file_count": 300,
+    "val_file_count": 100,
+    "test_file_count": 100,
+    "val_fraction": 0.2,
+    "test_fraction": 0.2,
+    "max_files_per_class": null,
+    "iq_cnn": {
+      "best_epoch": 77,
+      "val_acc": 0.5673,
+      "test_acc": 0.55035,
+      "macro_f1": 0.5469982595160852,
+      "weighted_f1": 0.5469982595160852
+    },
+    "fft_cnn": {
+      "best_epoch": 79,
+      "val_acc": 0.552225,
+      "test_acc": 0.537775,
+      "macro_f1": 0.5313189075086129,
+      "weighted_f1": 0.5313189075086129
+    },
+    "frozen_expert_residual_fusion": {
+      "best_epoch": 54,
+      "val_acc": 0.604975,
+      "test_alpha_mean": 0.91808046875,
+      "test_iq_anchor_fraction": 0.6316,
+      "best_val_alpha_mean": 0.91953671875,
+      "best_val_iq_anchor_fraction": 0.6282,
+      "test_acc": 0.5957,
+      "macro_f1": 0.5940550671339629,
+      "weighted_f1": 0.5940550671339629
+    },
+    "best_single_test_acc": 0.55035,
+    "improves_over_best_single": true,
+    "matches_or_beats_best_single": true,
+    "delta_vs_best_single": 0.04535
+  },
+  "runtime_seconds": 2157.855413060999
+}

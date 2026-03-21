@@ -1,0 +1,101 @@
+{
+  "dataset": {
+    "train_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/train.h5",
+    "val_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/val.h5",
+    "test_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/test.h5",
+    "max_windows_per_file": 256,
+    "train_windows": 19200,
+    "val_windows": 6400,
+    "test_windows": 6400,
+    "class_names": [
+      "80211ah",
+      "802154g",
+      "Lora",
+      "Noise",
+      "Sigfox",
+      "sunOFDM"
+    ]
+  },
+  "training": {
+    "epochs": 15,
+    "batch_size": 256,
+    "time_cnn": {
+      "best_epoch": 11,
+      "val_acc": 0.798125,
+      "device": "cuda"
+    },
+    "fft_cnn": {
+      "best_epoch": 14,
+      "val_acc": 0.76046875,
+      "device": "cuda"
+    },
+    "gated_multimodal_cnn": {
+      "best_epoch": 10,
+      "val_acc": 0.79875,
+      "best_val_gate_weights": [
+        0.34254896327177337,
+        0.5141871529960036,
+        0.14326388501930978
+      ],
+      "device": "cuda"
+    }
+  },
+  "awgn_ablation": [
+    {
+      "snr_db": 30.0,
+      "time_cnn_acc": 0.8178125,
+      "fft_cnn_acc": 0.77296875,
+      "gated_multimodal_acc": 0.81796875
+    },
+    {
+      "snr_db": 20.0,
+      "time_cnn_acc": 0.81796875,
+      "fft_cnn_acc": 0.76921875,
+      "gated_multimodal_acc": 0.81921875
+    },
+    {
+      "snr_db": 10.0,
+      "time_cnn_acc": 0.81953125,
+      "fft_cnn_acc": 0.75421875,
+      "gated_multimodal_acc": 0.82390625
+    },
+    {
+      "snr_db": 5.0,
+      "time_cnn_acc": 0.81203125,
+      "fft_cnn_acc": 0.690625,
+      "gated_multimodal_acc": 0.8115625
+    },
+    {
+      "snr_db": 0.0,
+      "time_cnn_acc": 0.68296875,
+      "fft_cnn_acc": 0.6215625,
+      "gated_multimodal_acc": 0.69625
+    },
+    {
+      "snr_db": -5.0,
+      "time_cnn_acc": 0.49890625,
+      "fft_cnn_acc": 0.47546875,
+      "gated_multimodal_acc": 0.65375
+    },
+    {
+      "snr_db": -10.0,
+      "time_cnn_acc": 0.4028125,
+      "fft_cnn_acc": 0.413125,
+      "gated_multimodal_acc": 0.5728125
+    },
+    {
+      "snr_db": -15.0,
+      "time_cnn_acc": 0.4003125,
+      "fft_cnn_acc": 0.39796875,
+      "gated_multimodal_acc": 0.4771875
+    },
+    {
+      "snr_db": -20.0,
+      "time_cnn_acc": 0.4,
+      "fft_cnn_acc": 0.39875,
+      "gated_multimodal_acc": 0.43015625
+    }
+  ],
+  "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment7_awgn_ablation_real.png",
+  "runtime_seconds": 37.77216153498739
+}

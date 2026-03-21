@@ -4,7 +4,7 @@
 
 Test a safer multimodal architecture across the same dataset family collected in:
 
-- [Experiment5_Comparable_Experiments.md](/home/klukasdh/Projects/DLSignalClassifier/docs/Experiment5_Comparable_Experiments.md)
+- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
 
 The target hypothesis was:
 
@@ -16,7 +16,7 @@ This is not a claim of formal proof. It is an empirical test of whether a more c
 
 Implemented in:
 
-- [run_experiment11_frozen_expert_residual_multidataset.py](/home/klukasdh/Projects/DLSignalClassifier/experiments/run_experiment11_frozen_expert_residual_multidataset.py)
+- [run.py](../experiments/exp03_frozen_expert_residual/run.py)
 
 Design:
 
@@ -166,13 +166,13 @@ This new design did better in the full multi-dataset sweep:
 
 Machine-readable results were saved to:
 
-- [experiment11_frozen_expert_residual_multidataset_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_frozen_expert_residual_multidataset_results.json)
+- [experiment11_frozen_expert_residual_multidataset_results.json](../experiments/exp03_frozen_expert_residual/artifacts/experiment11_frozen_expert_residual_multidataset_results.json)
 
 ## Addendum: RadioML 2018 Balanced Subset
 
 Follow-up run using the same frozen-expert residual architecture on:
 
-- [GOLD_XYZ_OSC.0001_1024.hdf5](/home/klukasdh/Projects/DLSignalClassifier/external/radioml_dataset/GOLD_XYZ_OSC.0001_1024.hdf5)
+- [GOLD_XYZ_OSC.0001_1024.hdf5](../external/radioml_dataset/GOLD_XYZ_OSC.0001_1024.hdf5)
 
 Because the full RadioML 2018 dataset contains `2555904` windows, this follow-up used a reproducible balanced subset instead of the full corpus:
 
@@ -207,4 +207,52 @@ Interpretation:
 
 Artifact:
 
-- [experiment11_radioml2018_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_radioml2018_results.json)
+- [results.json](../experiments/followups/radioml2018/results.json)
+
+## Addendum: RadioML 2018 Full-Dataset Streaming Run
+
+The earlier balanced-subset addendum was a quick feasibility check. We then updated the runner to stream directly from the HDF5 so the same Experiment 11 architecture could train on the entire dataset with a long schedule:
+
+- [run.py](../experiments/followups/radioml2018/run.py)
+
+Dataset:
+
+- [GOLD_XYZ_OSC.0001_1024.hdf5](../external/radioml_dataset/GOLD_XYZ_OSC.0001_1024.hdf5)
+
+Split and training protocol:
+
+- full `RML2018.01A` corpus used
+- `4096` examples per `(class, SNR)` cell
+- fixed-seed random split per cell: `3276 / 410 / 410`
+- total windows: `2044224 / 255840 / 255840`
+- `24` classes
+- `26` SNR levels from `-20` to `30` dB
+- signal length: `1024`
+- batch size: `256`
+- epochs: `40`
+- runtime: about `5446` seconds
+
+Important caveat:
+
+- class names still follow the public mirrored `RML2018.01A` `classes.txt` ordering
+- some third-party analysis reports that this ordering may not perfectly match the HDF5 label indices
+
+Results:
+
+- IQ expert: `0.610`
+- FFT expert: `0.303`
+- frozen-expert residual fusion: `0.614`
+- delta vs best single: `+0.004`
+- test alpha mean: `0.414`
+- test IQ-anchor fraction: `0.840`
+
+Interpretation:
+
+- the full-data long-run result is much stronger than the earlier balanced-subset run
+- on this benchmark, the architecture is still clearly IQ-dominant rather than balanced between modalities
+- the residual fusion model again beats the best single expert, but now only by a very small margin
+- so the main correction to the earlier interpretation is not that fusion suddenly becomes dominant, but that the IQ expert itself becomes substantially stronger when given the whole dataset and a long schedule
+
+Artifact:
+
+- [results.json](../experiments/followups/radioml2018/results.json)

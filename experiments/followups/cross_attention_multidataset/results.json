@@ -1,0 +1,84 @@
+{
+  "experiment": "cross_attention_multidataset_benchmark",
+  "real_max_windows_per_file": 128,
+  "orbit_max_packets_per_node": 128,
+  "datasets": {
+    "modulation_family": {
+      "best_epoch": 20,
+      "val_acc": 0.6966666666666667,
+      "test_acc": 0.6866666666666666,
+      "macro_f1": 0.68314381644779,
+      "weighted_f1": 0.6831438164477901,
+      "wavelet_shape": [
+        1,
+        6,
+        1024
+      ],
+      "train_examples": 2400,
+      "val_examples": 300,
+      "test_examples": 300,
+      "signal_length": 1024,
+      "batch_size": 128,
+      "epochs": 20,
+      "runtime_seconds": 7.29939480999019
+    },
+    "waveform_family": {
+      "best_epoch": 19,
+      "val_acc": 0.825,
+      "test_acc": 0.83,
+      "macro_f1": 0.8283621282307543,
+      "weighted_f1": 0.8283621282307543,
+      "wavelet_shape": [
+        1,
+        6,
+        1024
+      ],
+      "train_examples": 3200,
+      "val_examples": 400,
+      "test_examples": 400,
+      "signal_length": 1024,
+      "batch_size": 128,
+      "epochs": 20,
+      "runtime_seconds": 7.830498535011429
+    },
+    "subghz_real": {
+      "best_epoch": 6,
+      "val_acc": 0.799375,
+      "test_acc": 0.8309375,
+      "macro_f1": 0.6620967347115482,
+      "weighted_f1": 0.8105318116902755,
+      "wavelet_shape": [
+        1,
+        6,
+        1024
+      ],
+      "train_examples": 9600,
+      "val_examples": 3200,
+      "test_examples": 3200,
+      "signal_length": 1024,
+      "batch_size": 128,
+      "epochs": 12,
+      "runtime_seconds": 17.942462674007402
+    },
+    "orbit_rf": {
+      "best_epoch": 12,
+      "val_acc": 0.7918911637931034,
+      "test_acc": 0.6567887931034483,
+      "macro_f1": 0.5959770434343938,
+      "weighted_f1": 0.5959770434343938,
+      "wavelet_shape": [
+        1,
+        6,
+        256
+      ],
+      "train_examples": 22272,
+      "val_examples": 7424,
+      "test_examples": 7424,
+      "signal_length": 256,
+      "batch_size": 256,
+      "epochs": 12,
+      "runtime_seconds": 16.13356902699161
+    }
+  },
+  "runtime_seconds": 52.05262021700037
+}

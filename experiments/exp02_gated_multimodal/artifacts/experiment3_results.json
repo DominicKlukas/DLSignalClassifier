@@ -1,0 +1,204 @@
+{
+  "modulation_time_feature_dataset": {
+    "gated_multimodal_cnn": {
+      "best_epoch": 11,
+      "val_acc": 0.67,
+      "test_acc": 0.68,
+      "macro_f1": 0.6760594066286534,
+      "weighted_f1": 0.6760594066286534,
+      "best_val_gate_weights": [
+        0.9980637147029241,
+        0.0005444532291365552,
+        0.0013918340303159008
+      ],
+      "test_gate_weights": [
+        0.9979137335220972,
+        0.0006089711455509435,
+        0.0014772954928715383
+      ]
+    },
+    "class_names": [
+      "BPSK",
+      "QPSK",
+      "8PSK",
+      "16QAM",
+      "64QAM",
+      "PAM4"
+    ]
+  },
+  "waveform_frequency_feature_dataset": {
+    "gated_multimodal_cnn": {
+      "best_epoch": 30,
+      "val_acc": 0.8975,
+      "test_acc": 0.9075,
+      "macro_f1": 0.9083186509369753,
+      "weighted_f1": 0.9083186509369753,
+      "best_val_gate_weights": [
+        0.11719612810063836,
+        0.0003351481227777242,
+        0.8824687249751878
+      ],
+      "test_gate_weights": [
+        0.11678733702605569,
+        0.00028193042497015597,
+        0.8829307306069677
+      ]
+    },
+    "class_names": [
+      "CW",
+      "AM",
+      "FM",
+      "OFDM",
+      "LFM_CHIRP",
+      "DSSS",
+      "FHSS",
+      "SC_BURST"
+    ]
+  },
+  "experiment1_baselines": {
+    "modulation_time_feature_dataset": {
+      "time_cnn": {
+        "best_epoch": 37,
+        "val_acc": 0.7666666666666667,
+        "test_acc": 0.73,
+        "macro_f1": 0.7267329922512541,
+        "weighted_f1": 0.7267329922512541
+      },
+      "fft_cnn": {
+        "best_epoch": 3,
+        "val_acc": 0.18666666666666668,
+        "test_acc": 0.19333333333333333,
+        "macro_f1": 0.14933611578665257,
+        "weighted_f1": 0.14933611578665257
+      },
+      "class_names": [
+        "BPSK",
+        "QPSK",
+        "8PSK",
+        "16QAM",
+        "64QAM",
+        "PAM4"
+      ]
+    },
+    "waveform_frequency_feature_dataset": {
+      "time_cnn": {
+        "best_epoch": 34,
+        "val_acc": 0.58,
+        "test_acc": 0.5975,
+        "macro_f1": 0.5839762741273945,
+        "weighted_f1": 0.5839762741273945
+      },
+      "fft_cnn": {
+        "best_epoch": 30,
+        "val_acc": 0.7275,
+        "test_acc": 0.7275,
+        "macro_f1": 0.7278089049503431,
+        "weighted_f1": 0.727808904950343
+      },
+      "class_names": [
+        "CW",
+        "AM",
+        "FM",
+        "OFDM",
+        "LFM_CHIRP",
+        "DSSS",
+        "FHSS",
+        "SC_BURST"
+      ]
+    },
+    "runtime_seconds": 391.69743860399467
+  },
+  "experiment2_multimodal": {
+    "modulation_time_feature_dataset": {
+      "multimodal_cnn": {
+        "best_epoch": 18,
+        "val_acc": 0.7133333333333334,
+        "test_acc": 0.7066666666666667,
+        "macro_f1": 0.7015026921175536,
+        "weighted_f1": 0.7015026921175536
+      },
+      "class_names": [
+        "BPSK",
+        "QPSK",
+        "8PSK",
+        "16QAM",
+        "64QAM",
+        "PAM4"
+      ]
+    },
+    "waveform_frequency_feature_dataset": {
+      "multimodal_cnn": {
+        "best_epoch": 30,
+        "val_acc": 0.82,
+        "test_acc": 0.8,
+        "macro_f1": 0.799874823793518,
+        "weighted_f1": 0.799874823793518
+      },
+      "class_names": [
+        "CW",
+        "AM",
+        "FM",
+        "OFDM",
+        "LFM_CHIRP",
+        "DSSS",
+        "FHSS",
+        "SC_BURST"
+      ]
+    },
+    "experiment1_baselines": {
+      "modulation_time_feature_dataset": {
+        "time_cnn": {
+          "best_epoch": 37,
+          "val_acc": 0.7666666666666667,
+          "test_acc": 0.73,
+          "macro_f1": 0.7267329922512541,
+          "weighted_f1": 0.7267329922512541
+        },
+        "fft_cnn": {
+          "best_epoch": 3,
+          "val_acc": 0.18666666666666668,
+          "test_acc": 0.19333333333333333,
+          "macro_f1": 0.14933611578665257,
+          "weighted_f1": 0.14933611578665257
+        },
+        "class_names": [
+          "BPSK",
+          "QPSK",
+          "8PSK",
+          "16QAM",
+          "64QAM",
+          "PAM4"
+        ]
+      },
+      "waveform_frequency_feature_dataset": {
+        "time_cnn": {
+          "best_epoch": 34,
+          "val_acc": 0.58,
+          "test_acc": 0.5975,
+          "macro_f1": 0.5839762741273945,
+          "weighted_f1": 0.5839762741273945
+        },
+        "fft_cnn": {
+          "best_epoch": 30,
+          "val_acc": 0.7275,
+          "test_acc": 0.7275,
+          "macro_f1": 0.7278089049503431,
+          "weighted_f1": 0.727808904950343
+        },
+        "class_names": [
+          "CW",
+          "AM",
+          "FM",
+          "OFDM",
+          "LFM_CHIRP",
+          "DSSS",
+          "FHSS",
+          "SC_BURST"
+        ]
+      },
+      "runtime_seconds": 391.69743860399467
+    },
+    "runtime_seconds": 457.3557130660047
+  },
+  "runtime_seconds": 290.9545141120034
+}

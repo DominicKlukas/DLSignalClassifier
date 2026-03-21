@@ -19,8 +19,8 @@ It excludes experiments that changed the model family beyond that comparison, su
 
 Source experiments:
 
-- IQ and FFT baselines from [Experiment 1](/home/klukasdh/Projects/DLSignalClassifier/docs/Codex_Experiment_Logs.md)
-- gated multimodal result from [Experiment 3](/home/klukasdh/Projects/DLSignalClassifier/docs/Codex_Experiment_Logs.md)
+- IQ and FFT baselines from [Experiments.md](Experiments.md)
+- gated multimodal result from [Experiments.md](Experiments.md)
 
 Dataset characteristics:
 
@@ -47,15 +47,15 @@ Interpretation:
 
 Artifacts:
 
-- [experiment1_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment1/experiment1_results.json)
-- [experiment3_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment1/experiment3_results.json)
+- [experiment1_results.json](../experiments/exp01_iq_vs_fft/artifacts/experiment1_results.json)
+- [experiment3_results.json](../experiments/exp02_gated_multimodal/artifacts/experiment3_results.json)
 
 ## Synthetic Waveform-Family Dataset
 
 Source experiments:
 
-- IQ and FFT baselines from [Experiment 1](/home/klukasdh/Projects/DLSignalClassifier/docs/Codex_Experiment_Logs.md)
-- gated multimodal result from [Experiment 3](/home/klukasdh/Projects/DLSignalClassifier/docs/Codex_Experiment_Logs.md)
+- IQ and FFT baselines from [Experiments.md](Experiments.md)
+- gated multimodal result from [Experiments.md](Experiments.md)
 
 Dataset characteristics:
 
@@ -82,16 +82,16 @@ Interpretation:
 
 Artifacts:
 
-- [experiment1_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment1/experiment1_results.json)
-- [experiment3_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment1/experiment3_results.json)
+- [experiment1_results.json](../experiments/exp01_iq_vs_fft/artifacts/experiment1_results.json)
+- [experiment3_results.json](../experiments/exp02_gated_multimodal/artifacts/experiment3_results.json)
 
 ## Real Sub-GHz Dataset Benchmark
 
 Dataset:
 
-- [train.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/train.h5)
-- [val.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/val.h5)
-- [test.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/test.h5)
+- [train.h5](../data/real_mat_dataset/train.h5)
+- [val.h5](../data/real_mat_dataset/val.h5)
+- [test.h5](../data/real_mat_dataset/test.h5)
 
 Setup:
 
@@ -113,7 +113,7 @@ Class set:
 
 Implementation:
 
-- [run_experiment6_real_h5.py](/home/klukasdh/Projects/DLSignalClassifier/experiments/run_experiment6_real_h5.py)
+- [run.py](../experiments/legacy/exp06_real_h5/run.py)
 
 Results:
 
@@ -128,7 +128,7 @@ Ranking:
 
 Artifact:
 
-- [experiment6_real_h5_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment6_real_h5_results.json)
+- [results_default.json](../experiments/legacy/exp06_real_h5/results_default.json)
 
 ## Real Sub-GHz Follow-Up: Larger Real-Data Subset
 
@@ -152,7 +152,7 @@ Ranking:
 
 Artifact:
 
-- [experiment6_real_h5_medium_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment6_real_h5_medium_results.json)
+- [results_medium.json](../experiments/legacy/exp06_real_h5/results_medium.json)
 
 ## Real Sub-GHz Follow-Up: Even Larger Subset, 40 Epochs
 
@@ -177,15 +177,15 @@ Ranking:
 
 Artifact:
 
-- [experiment6_real_h5_large_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment6_real_h5_large_results.json)
+- [results_large.json](../experiments/legacy/exp06_real_h5/results_large.json)
 
 ## Augmented Real Sub-GHz Dataset Benchmark
 
 Dataset:
 
-- [train.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/train.h5)
-- [val.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/val.h5)
-- [test.h5](/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset_augmented/test.h5)
+- [train.h5](../data/real_mat_dataset_augmented/train.h5)
+- [val.h5](../data/real_mat_dataset_augmented/val.h5)
+- [test.h5](../data/real_mat_dataset_augmented/test.h5)
 
 Setup:
 
@@ -199,7 +199,7 @@ Setup:
 
 Implementation:
 
-- [run_experiment6_real_h5.py](/home/klukasdh/Projects/DLSignalClassifier/experiments/run_experiment6_real_h5.py)
+- [run.py](../experiments/legacy/exp06_real_h5/run.py)
 
 Results:
 
@@ -219,7 +219,7 @@ Interpretation:
 
 Artifact:
 
-- [experiment6_augmented_real_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment6_augmented_real_results.json)
+- [results_augmented.json](../experiments/legacy/exp06_real_h5/results_augmented.json)
 
 ## Orbit RF Identification Dataset
 
@@ -227,7 +227,7 @@ This is a different real RF task, but it uses the same three-way comparison.
 
 Dataset:
 
-- [orbit_rf_identification_dataset_updated](/home/klukasdh/Projects/DLSignalClassifier/orbit_rf_identification_dataset_updated)
+- [orbit_rf_identification_dataset_updated](../orbit_rf_identification_dataset_updated)
 
 Setup:
 
@@ -242,7 +242,7 @@ Setup:
 
 Implementation:
 
-- [run_experiment5_orbit_rf.py](/home/klukasdh/Projects/DLSignalClassifier/experiments/run_experiment5_orbit_rf.py)
+- [run.py](../experiments/legacy/exp05_orbit_rf/run.py)
 
 Results:
 
@@ -257,24 +257,24 @@ Ranking:
 
 Artifact:
 
-- [experiment5_orbit_rf_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment5_orbit_rf_results.json)
+- [results.json](../experiments/legacy/exp05_orbit_rf/results.json)
 
 ## Captured `.npy` Dataset Re-Run
 
 Dataset:
 
-- [CapturedData/dataset](/home/klukasdh/Projects/DLSignalClassifier/CapturedData/dataset)
-- [metadata.csv](/home/klukasdh/Projects/DLSignalClassifier/CapturedData/dataset/metadata.csv)
+- [CapturedData/dataset](../CapturedData/dataset)
+- [metadata.csv](../CapturedData/dataset/metadata.csv)
 
 The captured recordings were converted into Experiment 5-style HDF5 splits using:
 
-- [convert_captured_npy_dataset_to_h5.py](/home/klukasdh/Projects/DLSignalClassifier/convert_captured_npy_dataset_to_h5.py)
+- [convert_to_h5.py](../dataset_prep/owned/captured/convert_to_h5.py)
 
 Generated dataset artifacts:
 
-- [train.h5](/home/klukasdh/Projects/DLSignalClassifier/data/captured_npy_dataset_experiment5/train.h5)
-- [val.h5](/home/klukasdh/Projects/DLSignalClassifier/data/captured_npy_dataset_experiment5/val.h5)
-- [test.h5](/home/klukasdh/Projects/DLSignalClassifier/data/captured_npy_dataset_experiment5/test.h5)
+- [train.h5](../data/captured_npy_dataset_experiment5/train.h5)
+- [val.h5](../data/captured_npy_dataset_experiment5/val.h5)
+- [test.h5](../data/captured_npy_dataset_experiment5/test.h5)
 
 Setup:
 
@@ -290,7 +290,7 @@ Setup:
 
 Implementation:
 
-- [run_experiment6_real_h5.py](/home/klukasdh/Projects/DLSignalClassifier/experiments/run_experiment6_real_h5.py)
+- [run.py](../experiments/legacy/exp06_real_h5/run.py)
 
 Results:
 
@@ -305,7 +305,7 @@ Ranking:
 
 Artifact:
 
-- [experiment5_captured_npy_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment5_captured_npy_results.json)
+- [results_captured_npy.json](../experiments/legacy/exp06_real_h5/results_captured_npy.json)
 
 ## High-Level Pattern
 

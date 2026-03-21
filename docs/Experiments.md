@@ -1,458 +1,153 @@
 # Experiments
 
-## Overview
+This file is the canonical high-level experiment summary for the repo.
 
-This repository evolved from clean synthetic modulation classification into a set of robustness experiments motivated by out-of-distribution SDR generalization. The main themes were:
+The main result is a three-step progression:
 
-- robustness to global phase shifts,
-- robustness to frequency offsets,
-- robustness to sample-rate scaling,
-- whether architectural bias helps beyond augmentation.
+1. IQ and FFT each win on different synthetic tasks.
+2. A learned gated multimodal model helps, but does not reliably dominate the best single expert.
+3. A frozen-expert residual fusion model does achieve that stronger behavior across the comparable benchmark family.
 
-The sections below summarize the motivation, hypothesis, concrete result, and conclusion for each experiment family that has been discussed and/or run so far.
+## Experiment 1: IQ vs FFT Representation Baselines
 
-## 1. Clean Synthetic Modulation Classification
+Question:
 
-### Motivation
+- does raw IQ win when the task is mostly time-structure driven?
+- does FFT win when the task is mostly frequency-structure driven?
 
-The original task was IQ modulation classification on synthetic signals generated from clean constellations, RRC pulse shaping, AWGN, random global phase shifts, and frequency offsets.
+Implementation:
 
-### Hypothesis
+- [run.py](../experiments/exp01_iq_vs_fft/run.py)
 
-A vanilla CNN should perform strongly on this synthetic problem, but the benchmark may be too easy to say much about real-world robustness.
+Artifacts:
 
-### Implementations
+- [modulation_time_features.h5](../experiments/exp01_iq_vs_fft/artifacts/modulation_time_features.h5)
+- [waveform_frequency_features.h5](../experiments/exp01_iq_vs_fft/artifacts/waveform_frequency_features.h5)
+- [experiment1_results.json](../experiments/exp01_iq_vs_fft/artifacts/experiment1_results.json)
 
-- `train_cnn.ipynb`
-- `train_fourier_cnn.ipynb`
-- `train_spectrograph_cnn.ipynb`
-- `train_phase_equivariant_cnn.ipynb`
+Result:
 
-### Result
+- modulation-family: IQ `0.730`, FFT `0.193`
+- waveform-family: IQ `0.598`, FFT `0.728`
 
-Saved checkpoint evaluation on the held-out clean synthetic test split gave:
+Takeaway:
 
-- Vanilla time-domain CNN
-  - validation accuracy: `0.823`
-  - test accuracy: `0.796`
-  - macro F1: `0.797`
-- Fourier 1D CNN
-  - validation accuracy: `0.179`
-  - test accuracy: `0.170`
-  - macro F1: `0.082`
-- Spectrogram CNN
-  - validation accuracy: `0.425`
-  - test accuracy: `0.419`
-  - macro F1: `0.413`
-- Phase-equivariant CNN
-  - validation accuracy: `0.792`
-  - test accuracy: `0.794`
-  - macro F1: `0.797`
+- the two representations are not redundant
+- IQ is the right inductive bias for modulation-family
+- FFT is the stronger representation for waveform-family
 
-The clean dataset therefore strongly favored the raw-IQ and phase-equivariant models, while the simple Fourier and spectrogram baselines underperformed badly on this task.
+This is the motivation for fusion.
 
-### Conclusion
+## Experiment 2: Gated IQ+FFT Fusion
 
-The frequency domain is not helpful if the frequency content of the different classes of signals is all the same. On top of that, the CNN works very well as if the data is already heavily augmented. What's the problem that we are trying to solve in the first place?
+Question:
 
-## 2. Harder Synthetic Modulation Robustness Benchmark
+- if IQ and FFT each win on different tasks, can a gated multimodal model become strictly better than the best single expert?
 
-### Motivation
+Implementation:
 
-To make the modulation problem more realistic, a harder generator was built with:
+- [run.py](../experiments/exp02_gated_multimodal/run.py)
 
-- timing offset,
-- sample-rate mismatch,
-- burst truncation,
-- multipath,
-- IQ imbalance,
-- DC offset,
-- colored noise,
-- nonlinearity,
-- optional interferers.
+Artifact:
 
+- [experiment3_results.json](../experiments/exp02_gated_multimodal/artifacts/experiment3_results.json)
 
-### Hypothesis
+Reference comparison set:
 
-A harder synthetic benchmark should expose failure modes that the clean modulation dataset hides, and allow comparison between:
+- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
 
-- vanilla CNN,
-- vanilla CNN + augmentation,
-- phase-equivariant front end.
+Results across all datasets in this comparison family:
 
-### Implementations
+- modulation-family: IQ `0.730`, FFT `0.193`, gated `0.680`
+- waveform-family: IQ `0.598`, FFT `0.728`, gated `0.908`
+- Sub-GHz real `128`: IQ `0.814`, FFT `0.774`, gated `0.816`
+- Sub-GHz real `512`: IQ `0.815`, FFT `0.819`, gated `0.823`
+- Sub-GHz real `1024`, `40` epochs: IQ `0.812`, FFT `0.816`, gated `0.821`
+- augmented Sub-GHz real `512`: IQ `0.797`, FFT `0.775`, gated `0.826`
+- Orbit RF: IQ `0.634`, FFT `0.719`, gated `0.707`
+- captured `.npy`: IQ `0.957`, FFT `0.826`, gated `0.973`
 
-- `ChallengingSignalGenerator.py`
-- `generate_challenging_dataset.py`
-- `train_challenging_comparison.ipynb`
-- `ablate_signal_degradations.ipynb`
+Takeaway:
 
-### Result
+- the gated model can be much better when the modalities are complementary
+- but it does **not** provide the stronger property we wanted
+- on modulation-family, it still falls below the best individual expert
+- on Orbit RF, FFT remains the strongest model
+- on several real datasets, gated fusion is best but often only by a small margin
 
-Saved checkpoint evaluation on the harder modulation benchmark gave:
+So the experimental progression does not end at multimodal fusion alone.
 
-- Vanilla CNN without augmentation
-  - validation accuracy: `0.461`
-  - test accuracy: `0.423`
-  - macro F1: `0.412`
-- Vanilla CNN with augmentation
-  - validation accuracy: `0.459`
-  - test accuracy: `0.431`
-  - macro F1: `0.417`
-- Phase-equivariant augmented CNN
-  - validation accuracy: `0.465`
-  - test accuracy: `0.446`
-  - macro F1: `0.421`
+## Experiment 3: Frozen-Expert Residual Fusion
 
-The improvement from architectural bias and augmentation was real but modest on this harder benchmark.
+Question:
 
-The ablation checkpoint from the clean-trained vanilla model on the challenging dataset identified the three most damaging degradation-focused subsets as:
+- can we build a multimodal model that keeps a true single-expert fallback path and only learns a bounded correction on top?
 
-- `low_snr`
-  - subset accuracy: `0.169`
-  - drop vs clean-ish subset: `0.045`
-  - samples: `2250`
-- `high_freq_offset`
-  - subset accuracy: `0.174`
-  - drop vs clean-ish subset: `0.040`
-  - samples: `2250`
-- `interferer`
-  - subset accuracy: `0.174`
-  - drop vs clean-ish subset: `0.040`
-  - samples: `2341`
+Implementation:
 
-### Conclusion
+- [run.py](../experiments/exp03_frozen_expert_residual/run.py)
 
-This branch is ready for future runs, but it is not the source of the quantitative conclusions below.
+Main artifact:
 
-## 3. Waveform-Family Dataset
+- [experiment11_frozen_expert_residual_multidataset_results.json](../experiments/exp03_frozen_expert_residual/artifacts/experiment11_frozen_expert_residual_multidataset_results.json)
 
-### Motivation
+Detailed write-up:
 
-Scale and frequency invariance are a poor fit for modulation classification because the task depends heavily on time-domain symbol structure. A waveform-family task is a better match for frequency-domain inductive biases.
+- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
 
-### Classes
+Results across the full comparable benchmark family:
 
-- `CW`
-- `AM`
-- `FM`
-- `OFDM`
-- `LFM_CHIRP`
-- `DSSS`
-- `FHSS`
-- `SC_BURST`
+- modulation-family: IQ `0.737`, FFT `0.177`, frozen residual `0.747`
+- waveform-family: IQ `0.575`, FFT `0.750`, frozen residual `0.885`
+- Sub-GHz real `128`: IQ `0.807`, FFT `0.764`, frozen residual `0.813`
+- Sub-GHz real `512`: IQ `0.818`, FFT `0.816`, frozen residual `0.823`
+- Sub-GHz real `1024`, `40` epochs: IQ `0.814`, FFT `0.818`, frozen residual `0.821`
+- augmented Sub-GHz real `512`: IQ `0.796`, FFT `0.796`, frozen residual `0.812`
+- Orbit RF: IQ `0.668`, FFT `0.682`, frozen residual `0.693`
+- captured `.npy`: IQ `0.961`, FFT `0.828`, frozen residual `0.972`
 
-### Hypothesis
+Core result:
 
-Frequency-domain models should transfer better across frequency shifts and possibly sample-rate distortions than time-domain models.
+- on every dataset in that benchmark family, the frozen-expert residual model matched or exceeded the best single expert in the same run
 
-### Implementations
+Takeaway:
 
-- `WaveformFamilyGenerator.py`
-- `generate_waveform_family_dataset.py`
-- `train_waveform_family_cnn.py`
+- this is the architecture that resolves the main open question in the repo
+- it keeps the expert structure explicit
+- and it empirically achieves the stronger behavior that the gated model did not
 
-### Conclusion
+### RadioML 2018 Addendum
 
-This dataset became the main platform for the OOD experiments below.
+The same frozen-expert residual design was also evaluated on RadioML 2018 as a follow-up benchmark.
 
-## 4. Frequency-Offset OOD With FFT CNN
+Full-data streaming result:
 
-### Motivation
+- IQ `0.610`
+- FFT `0.303`
+- frozen residual `0.614`
 
-Train on waveform-family signals without center-frequency offsets and test on signals with frequency offsets.
+Interpretation:
 
-### Hypothesis
+- this benchmark is clearly IQ-dominant in our runs
+- the frozen residual model only improves slightly over the IQ expert
+- but that full-data result is still in a competitive range relative to published RML2018.01A average-accuracy comparisons, which are often reported around the low-to-mid `60%` range for strong models
 
-An FFT-based CNN should be relatively robust to frequency offsets because the class signal is largely spectral.
+References:
 
-### Protocol
+- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
+- [Deep Learning Based Automatic Modulation Recognition: Models, Datasets, and Challenges](https://ore.exeter.ac.uk/repository/bitstream/10871/131623/1/Deep%20Learning%20Based%20Automatic%20Modulation%20Recognition.pdf)
+- [A Novel Approach for Robust Automatic Modulation Recognition Based on Reversible Column Networks](https://www.mdpi.com/2079-9292/14/3/618)
 
-- Train dataset: `waveform_family_no_offset_dataset.h5`
-- Test dataset: `waveform_family_dataset.h5`
-- Model: `train_waveform_family_ood_frequency_fft.py`
+## Recommended Reading Order
 
-### Result
+- [Experiments.md](Experiments.md)
+- [Experiment5_Comparable_Experiments.md](Experiment5_Comparable_Experiments.md)
+- [Experiment11_Frozen_Expert_Residual_Multidataset_Log.md](Experiment11_Frozen_Expert_Residual_Multidataset_Log.md)
 
-Best validation accuracy: `0.941`
+## Interesting Appendix
 
-OOD test accuracy: `0.749`
+This is not part of the core experiment sequence, but it sharpens the interpretation of Experiment 3:
 
-Macro F1: `0.70`
+- [Experiment11_Correct_Set_Overlap_Log.md](Experiment11_Correct_Set_Overlap_Log.md)
 
-Weighted F1: `0.71`
-
-Per-class behavior:
-
-- Very strong: `DSSS 1.00`, `OFDM 0.99`, `FM 0.91`, `SC_BURST 0.91`
-- Weak: `AM 0.28`, `CW 0.21`
-- Moderate: `FHSS 0.69`, `LFM_CHIRP 0.64`
-
-### Conclusion
-
-FFT features help substantially for frequency-offset transfer, but the model still confuses some narrowband spectral classes:
-
-- `AM` often collapses into `FHSS`, `FM`, or `LFM_CHIRP`
-- `CW` often collapses into `LFM_CHIRP` and `FHSS`
-
-The result is useful but not invariant in a strong sense.
-
-## 5. Sample-Rate OOD: Early Exploratory Run
-
-### Motivation
-
-Before the exact-scale datasets were introduced, an FFT CNN was trained for the sample-rate OOD problem.
-
-### Hypothesis
-
-FFT-domain processing might already be robust to moderate sampling distortions.
-
-### Protocol
-
-- Train dataset: `waveform_family_no_rate_offset_dataset.h5`
-- Test dataset: earlier `waveform_family_dataset.h5`
-- Model: `train_waveform_family_ood_sample_rate_fft.py`
-
-### Result
-
-Best validation accuracy: `0.919`
-
-OOD test accuracy: `0.916`
-
-Macro F1: `0.92`
-
-### Conclusion
-
-This run became obsolete after the generator was refactored so that `waveform_family_dataset.h5` no longer carried explicit sample-rate scaling. The result is therefore not the corrected sample-rate-scale benchmark and should not be used as the main conclusion.
-
-## 6. Corrected Wideband Sample-Rate-Scale OOD
-
-### Motivation
-
-Create an explicit sample-rate-scale benchmark with exact scales and compare:
-
-- plain FFT CNN,
-- scale-group FFT CNN.
-
-### Hypothesis
-
-A shared-weight scale-group model over FFT spectra should outperform a plain FFT CNN when tested on exact scale factors.
-
-### Datasets
-
-- Train: `waveform_family_no_rate_offset_dataset.h5` with scale `1.0`
-- Test: `waveform_family_rate_scaled_dataset.h5` or `waveform_family_exact_scale_dataset.h5`
-- Exact test scales: `1.0`, `1.33`, `2.0`, `4.0`
-
-### Models
-
-- `train_waveform_family_ood_sample_rate_fft.py`
-- `train_waveform_family_ood_sample_rate_scale_group_fft.py`
-- `test_waveform_family_exact_scale_group_fft.py`
-
-### Plain FFT CNN Result
-
-Best validation accuracy: `0.925`
-
-OOD test accuracy on rate-scaled dataset: `0.558`
-
-Macro F1: `0.53`
-
-Main confusions:
-
-- `DSSS` almost entirely collapses into `OFDM` and `SC_BURST`
-- `OFDM` often collapses into `SC_BURST`
-- `CW` remains easy, with recall `0.94`
-
-### Scale-Group FFT CNN Result
-
-Best validation accuracy: `0.955`
-
-OOD test accuracy on rate-scaled dataset: `0.570`
-
-Macro F1: `0.54`
-
-This is only a marginal improvement over the plain FFT CNN.
-
-### Exact-Scale Evaluation Of The Scale-Group FFT CNN
-
-Overall exact-scale accuracy: `0.655`
-
-Per-scale accuracies:
-
-- `1.00x`: `0.938`
-- `1.33x`: `0.776`
-- `2.00x`: `0.570`
-- `4.00x`: `0.336`
-
-### Conclusion
-
-The wideband exact-scale experiment showed:
-
-- strong performance at `1.0x`,
-- moderate degradation at `1.33x`,
-- large degradation at `2.0x`,
-- catastrophic degradation at `4.0x`.
-
-The scale-group architecture did not provide anything close to true scale invariance. The best interpretation is:
-
-- it is an approximate scale-channel model,
-- not an exact scale-equivariant model,
-- and the applied data transformation is more destructive than a clean theoretical group action on ideal spectra.
-
-## 7. Narrowband Exact-Scale Rerun
-
-### Motivation
-
-The previous wideband sample-rate experiment likely violated the intended invariance assumptions because the `4x` transform pushed too much energy and structure into a distorted regime. To reduce this mismatch, the experiment was recreated so that even at the largest scale the occupied bandwidth stayed below one quarter of the full sampled bandwidth.
-
-### Hypothesis
-
-Restricting all waveform families to narrower bandwidth should make sample-rate scaling more nearly label-preserving and improve the scale-group model’s transfer.
-
-### Datasets
-
-- Train: `waveform_family_narrowband_no_rate_offset_dataset.h5`
-- Test: `waveform_family_narrowband_exact_scale_dataset.h5`
-- Occupied bandwidth bounds: `80 Hz` to `400 Hz`
-- Exact scales: `1.0`, `1.33`, `2.0`, `4.0`
-
-### Model
-
-- `train_waveform_family_narrowband_ood_sample_rate_scale_group_fft.py`
-- `test_waveform_family_narrowband_exact_scale_group_fft.py`
-
-### Result
-
-Best validation accuracy: `0.966`
-
-Overall OOD test accuracy: `0.730`
-
-Macro F1: `0.74`
-
-Per-scale accuracies:
-
-- `1.00x`: `0.963`
-- `1.33x`: `0.888`
-- `2.00x`: `0.689`
-- `4.00x`: `0.379`
-
-### Comparison Against The Wideband Scale-Group Run
-
-Wideband exact-scale overall: `0.655`
-
-Narrowband exact-scale overall: `0.730`
-
-Wideband per-scale:
-
-- `1.00x`: `0.938`
-- `1.33x`: `0.776`
-- `2.00x`: `0.570`
-- `4.00x`: `0.336`
-
-Narrowband per-scale:
-
-- `1.00x`: `0.963`
-- `1.33x`: `0.888`
-- `2.00x`: `0.689`
-- `4.00x`: `0.379`
-
-### Conclusion
-
-This was the clearest positive result in the scale experiments:
-
-- narrowing the waveform bandwidth materially improved transfer at every scale,
-- especially at `1.33x` and `2.0x`,
-- but `4.0x` remained hard.
-
-This strongly suggests the earlier failures were not only architectural. A large part of the rolloff came from the transformation itself becoming too destructive for the chosen data distribution.
-
-## 8. Narrowband Scale-Channel Pilot
-
-### Motivation
-
-Older scale-equivariant models often generalize poorly outside the sampled scale range. Scale-channel networks are designed to generalize better to previously unseen scales by building a multi-scale representation and pooling over scale channels, rather than learning convolutions over the scale axis itself.
-
-### Hypothesis
-
-On the narrowband exact-scale benchmark, a scale-channel FFT model should extrapolate better than the earlier scale-group FFT model, especially when trained only on `1.0x` signals and tested zero-shot on `1.33x`, `2.0x`, and `4.0x`.
-
-### Protocol
-
-- Train: `waveform_family_narrowband_no_rate_offset_dataset.h5`
-- Test: `waveform_family_narrowband_exact_scale_dataset.h5`
-- Model: `train_waveform_family_narrowband_ood_sample_rate_scale_channel_fft.py`
-- Evaluation: `test_waveform_family_narrowband_exact_scale_channel_fft.py`
-- Internal scale-channel grid: `0.75`, `1.0`, `1.33`, `2.0`, `4.0`
-
-To keep the experiment runnable in this environment, the FFT input was reduced from `1024` bins to `256` bins before the scale-channel stack, and the pilot was trained for `20` epochs.
-
-### Result
-
-Best validation accuracy: `0.590`
-
-Overall exact-scale OOD accuracy: `0.386`
-
-Macro F1: `0.40`
-
-Per-scale accuracies:
-
-- `1.00x`: `0.602`
-- `1.33x`: `0.465`
-- `2.00x`: `0.317`
-- `4.00x`: `0.160`
-
-### Comparison Against Narrowband Scale-Group FFT
-
-Narrowband scale-group FFT:
-
-- overall: `0.730`
-- `1.00x`: `0.963`
-- `1.33x`: `0.888`
-- `2.00x`: `0.689`
-- `4.00x`: `0.379`
-
-Narrowband scale-channel pilot:
-
-- overall: `0.386`
-- `1.00x`: `0.602`
-- `1.33x`: `0.465`
-- `2.00x`: `0.317`
-- `4.00x`: `0.160`
-
-### Conclusion
-
-This pilot did not support the hypothesis. In this implementation, the scale-channel model performed substantially worse than the earlier narrowband scale-group model at every scale.
-
-The most likely reasons are:
-
-- the quick scale-channel implementation was much shallower and more aggressively pooled than the scale-group model,
-- the pilot used a compressed `256`-bin FFT representation to keep runtime manageable on CPU,
-- simple average/max pooling over scale channels may have thrown away too much structure too early.
-
-So the conclusion is not that scale-channel networks are ineffective in principle. The conclusion is narrower:
-
-- this first scale-channel implementation did not beat the existing narrowband scale-group baseline,
-- and a more faithful SCN-style implementation would need a stronger per-scale backbone and less destructive pooling.
-
-## 9. Cross-Experiment Conclusions
-
-### Main Lessons
-
-1. Clean synthetic modulation classification is too easy to support strong claims about robustness.
-2. Frequency-offset robustness is much easier to obtain in the waveform-family FFT setting than sample-rate-scale robustness.
-3. A plain FFT CNN is already strong for frequency-offset OOD.
-4. The initial scale-group FFT implementation did not achieve true scale invariance.
-5. Narrowing the signal bandwidth improves approximate scale robustness substantially.
-6. The first narrowband scale-channel pilot underperformed the scale-group baseline, so the architectural idea is still unproven in this codebase.
-7. The remaining drop at `4x` indicates that:
-   - the transformation is still not perfectly label-preserving, and/or
-   - the implemented scale-group action is still only an approximation of the real data transformation.
-
-### Recommended Next Steps
-
-1. Rebuild the scale-channel model with a stronger per-scale backbone and delayed scale pooling, instead of the lightweight pilot used here.
-2. Compare plain FFT CNN vs scale-group FFT CNN vs scale-channel FFT on the narrowband exact-scale benchmark with per-scale confusion matrices side by side.
-3. Train on a subset of scales such as `1.0`, `1.33`, `2.0` and test on `4.0` only, to separate interpolation from extrapolation.
-4. Move from linear-frequency FFT inputs to log-frequency or wavelet-like representations.
-5. Revisit the scale action so the model-side transform matches the data-generation transform more faithfully.
+That analysis shows the frozen model wins in total accuracy, but it does not literally preserve the full union of IQ-correct and FFT-correct samples on every dataset.

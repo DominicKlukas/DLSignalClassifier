@@ -18,18 +18,18 @@ We want to see:
 
 Machine-readable results:
 
-- [experiment11_overlap_analysis_results.json](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_results.json)
+- [results.json](../experiments/analysis/correct_set_overlap/results.json)
 
 Per-dataset overlap plots:
 
-- [modulation_family_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/modulation_family_overlap.png)
-- [waveform_family_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/waveform_family_overlap.png)
-- [subghz_real_128_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_128_overlap.png)
-- [subghz_real_512_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_512_overlap.png)
-- [subghz_real_1024_40ep_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_1024_40ep_overlap.png)
-- [subghz_real_augmented_512_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/subghz_real_augmented_512_overlap.png)
-- [orbit_rf_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/orbit_rf_overlap.png)
-- [captured_npy_real_128_overlap.png](/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment11_overlap_analysis_plots/captured_npy_real_128_overlap.png)
+- [modulation_family_overlap.png](../experiments/analysis/correct_set_overlap/plots/modulation_family_overlap.png)
+- [waveform_family_overlap.png](../experiments/analysis/correct_set_overlap/plots/waveform_family_overlap.png)
+- [subghz_real_128_overlap.png](../experiments/analysis/correct_set_overlap/plots/subghz_real_128_overlap.png)
+- [subghz_real_512_overlap.png](../experiments/analysis/correct_set_overlap/plots/subghz_real_512_overlap.png)
+- [subghz_real_1024_40ep_overlap.png](../experiments/analysis/correct_set_overlap/plots/subghz_real_1024_40ep_overlap.png)
+- [subghz_real_augmented_512_overlap.png](../experiments/analysis/correct_set_overlap/plots/subghz_real_augmented_512_overlap.png)
+- [orbit_rf_overlap.png](../experiments/analysis/correct_set_overlap/plots/orbit_rf_overlap.png)
+- [captured_npy_real_128_overlap.png](../experiments/analysis/correct_set_overlap/plots/captured_npy_real_128_overlap.png)
 
 ## How to Read the Plots
 

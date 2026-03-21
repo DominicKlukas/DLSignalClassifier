@@ -1,0 +1,115 @@
+{
+  "dataset": {
+    "dataset_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment1/waveform_frequency_features.h5",
+    "class_names": [
+      "CW",
+      "AM",
+      "FM",
+      "OFDM",
+      "LFM_CHIRP",
+      "DSSS",
+      "FHSS",
+      "SC_BURST"
+    ],
+    "train_windows": 3200,
+    "val_windows": 400,
+    "test_windows": 400
+  },
+  "clean_reference": {
+    "time_cnn": {
+      "best_epoch": 29,
+      "val_acc": 0.59,
+      "test_acc": 0.5975,
+      "macro_f1": 0.5905355813113687,
+      "weighted_f1": 0.5905355813113686
+    },
+    "fft_cnn": {
+      "best_epoch": 35,
+      "val_acc": 0.7075,
+      "test_acc": 0.7,
+      "macro_f1": 0.7007137509001696,
+      "weighted_f1": 0.7007137509001697
+    },
+    "gated_multimodal_cnn": {
+      "best_epoch": 23,
+      "val_acc": 0.905,
+      "best_val_gate_weights": [
+        0.1354088338433137,
+        0.0003067768667688142,
+        0.8642843851989892
+      ],
+      "test_acc": 0.875,
+      "macro_f1": 0.8753277134164577,
+      "weighted_f1": 0.8753277134164575,
+      "mean_gate_weights": [
+        0.13942152167291522,
+        0.00029297929135282177,
+        0.8602855004133017
+      ]
+    }
+  },
+  "test_only_awgn_ablation": [
+    {
+      "snr_label": "clean",
+      "time_cnn_acc": 0.5975,
+      "fft_cnn_acc": 0.7,
+      "gated_multimodal_acc": 0.875
+    },
+    {
+      "snr_label": "30",
+      "time_cnn_acc": 0.5975,
+      "fft_cnn_acc": 0.7,
+      "gated_multimodal_acc": 0.87
+    },
+    {
+      "snr_label": "20",
+      "time_cnn_acc": 0.59,
+      "fft_cnn_acc": 0.7,
+      "gated_multimodal_acc": 0.8675
+    },
+    {
+      "snr_label": "10",
+      "time_cnn_acc": 0.57,
+      "fft_cnn_acc": 0.695,
+      "gated_multimodal_acc": 0.8525
+    },
+    {
+      "snr_label": "5",
+      "time_cnn_acc": 0.555,
+      "fft_cnn_acc": 0.66,
+      "gated_multimodal_acc": 0.8275
+    },
+    {
+      "snr_label": "0",
+      "time_cnn_acc": 0.445,
+      "fft_cnn_acc": 0.5275,
+      "gated_multimodal_acc": 0.63
+    },
+    {
+      "snr_label": "-5",
+      "time_cnn_acc": 0.2275,
+      "fft_cnn_acc": 0.2375,
+      "gated_multimodal_acc": 0.2625
+    },
+    {
+      "snr_label": "-10",
+      "time_cnn_acc": 0.125,
+      "fft_cnn_acc": 0.1275,
+      "gated_multimodal_acc": 0.13
+    },
+    {
+      "snr_label": "-15",
+      "time_cnn_acc": 0.1275,
+      "fft_cnn_acc": 0.125,
+      "gated_multimodal_acc": 0.1275
+    },
+    {
+      "snr_label": "-20",
+      "time_cnn_acc": 0.1225,
+      "fft_cnn_acc": 0.125,
+      "gated_multimodal_acc": 0.125
+    }
+  ],
+  "plot_path": "/home/klukasdh/Projects/DLSignalClassifier/experiments/experiment8_awgn_ablation_waveform_corrected.png",
+  "runtime_seconds": 23.42666291099158
+}
