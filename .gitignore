@@ -13,7 +13,7 @@ orbit_rf_identification_dataset_updated/
 *old_experiments/
 
 # External datasets and vendored third-party repos
-external/
+/external/
 
 # Generated experiment artifacts that are too large for GitHub
 experiments/**/__pycache__/
