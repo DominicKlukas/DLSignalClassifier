@@ -52,6 +52,16 @@ CAPTURED_VAL_PATH = ROOT_DIR / "data" / "captured_npy_dataset_experiment5" / "va
 CAPTURED_TEST_PATH = ROOT_DIR / "data" / "captured_npy_dataset_experiment5" / "test.h5"
 
 RESULTS_PATH = Path(__file__).resolve().parent / "artifacts" / "experiment11_frozen_expert_residual_multidataset_results.json"
+DEFAULT_DATASET_ORDER = [
+    "modulation_family",
+    "waveform_family",
+    "subghz_real_128",
+    "subghz_real_512",
+    "subghz_real_1024_40ep",
+    "subghz_real_augmented_512",
+    "orbit_rf",
+    "captured_npy_real_128",
+]
 
 
 class PairDataset(Dataset):
@@ -342,10 +352,7 @@ def run_dataset(dataset: dict):
     return results
 
 
-def run_experiment(results_path: Path = RESULTS_PATH, orbit_max_packets_per_node: int = 256) -> dict:
-    set_global_seed(SEED)
-    start = time.perf_counter()
-
+def build_story_datasets(orbit_max_packets_per_node: int = 256, dataset_names: set[str] | None = None) -> list[dict]:
     missing_dependencies = missing_story_experiment3_dependencies()
     if missing_dependencies:
         missing_text = "\n".join(f"- {path}" for path in missing_dependencies)
@@ -356,43 +363,120 @@ def run_experiment(results_path: Path = RESULTS_PATH, orbit_max_packets_per_node
             "Run `./.venv/bin/python experiments/check_data.py` for a full audit and see docs/datasets.md for dataset placement details."
         )
 
-    modulation = load_modulation_dataset()
-    modulation["epochs"] = 40
+    requested = dataset_names or set(DEFAULT_DATASET_ORDER)
+    datasets = []
 
-    waveform = load_waveform_dataset()
-    waveform["epochs"] = 40
+    if "modulation_family" in requested:
+        modulation = load_modulation_dataset()
+        modulation["epochs"] = 40
+        datasets.append(modulation)
 
-    datasets = [
-        modulation,
-        waveform,
-        build_h5_dataset("subghz_real_128", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=128, batch_size=256, epochs=20),
-        build_h5_dataset("subghz_real_512", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=512, batch_size=256, epochs=20),
-        build_h5_dataset("subghz_real_1024_40ep", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=1024, batch_size=256, epochs=40),
-        build_h5_dataset("subghz_real_augmented_512", AUG_REAL_TRAIN_PATH, AUG_REAL_VAL_PATH, AUG_REAL_TEST_PATH, max_windows_per_file=512, batch_size=256, epochs=20),
-        load_orbit_dataset(max_packets_per_node=orbit_max_packets_per_node),
-        build_h5_dataset("captured_npy_real_128", CAPTURED_TRAIN_PATH, CAPTURED_VAL_PATH, CAPTURED_TEST_PATH, max_windows_per_file=128, batch_size=256, epochs=20),
-    ]
+    if "waveform_family" in requested:
+        waveform = load_waveform_dataset()
+        waveform["epochs"] = 40
+        datasets.append(waveform)
 
-    # Match the original Orbit benchmark settings from the comparable-experiments file.
-    datasets[6]["epochs"] = 20
-    datasets[6]["batch_size"] = 256
+    if "subghz_real_128" in requested:
+        datasets.append(
+            build_h5_dataset("subghz_real_128", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=128, batch_size=256, epochs=20)
+        )
+
+    if "subghz_real_512" in requested:
+        datasets.append(
+            build_h5_dataset("subghz_real_512", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=512, batch_size=256, epochs=20)
+        )
+
+    if "subghz_real_1024_40ep" in requested:
+        datasets.append(
+            build_h5_dataset("subghz_real_1024_40ep", REAL_TRAIN_PATH, REAL_VAL_PATH, REAL_TEST_PATH, max_windows_per_file=1024, batch_size=256, epochs=40)
+        )
+
+    if "subghz_real_augmented_512" in requested:
+        datasets.append(
+            build_h5_dataset(
+                "subghz_real_augmented_512",
+                AUG_REAL_TRAIN_PATH,
+                AUG_REAL_VAL_PATH,
+                AUG_REAL_TEST_PATH,
+                max_windows_per_file=512,
+                batch_size=256,
+                epochs=20,
+            )
+        )
+
+    if "orbit_rf" in requested:
+        orbit = load_orbit_dataset(max_packets_per_node=orbit_max_packets_per_node)
+        orbit["epochs"] = 20
+        orbit["batch_size"] = 256
+        datasets.append(orbit)
+
+    if "captured_npy_real_128" in requested:
+        datasets.append(
+            build_h5_dataset(
+                "captured_npy_real_128",
+                CAPTURED_TRAIN_PATH,
+                CAPTURED_VAL_PATH,
+                CAPTURED_TEST_PATH,
+                max_windows_per_file=128,
+                batch_size=256,
+                epochs=20,
+            )
+        )
+
+    return datasets
+
+
+def select_datasets(datasets: list[dict], dataset_names: list[str] | None) -> list[dict]:
+    if dataset_names is None:
+        return datasets
+
+    selected = []
+    dataset_by_name = {dataset["name"]: dataset for dataset in datasets}
+    missing = [name for name in dataset_names if name not in dataset_by_name]
+    if missing:
+        missing_text = ", ".join(sorted(missing))
+        raise ValueError(f"Unknown dataset names requested: {missing_text}")
+
+    for name in dataset_names:
+        selected.append(dataset_by_name[name])
+    return selected
+
+
+def run_experiment(
+    results_path: Path = RESULTS_PATH,
+    orbit_max_packets_per_node: int = 256,
+    seed: int = SEED,
+    dataset_names: list[str] | None = None,
+) -> dict:
+    set_global_seed(seed)
+    start = time.perf_counter()
+
+    requested_set = set(dataset_names) if dataset_names is not None else None
+    datasets = select_datasets(
+        build_story_datasets(orbit_max_packets_per_node=orbit_max_packets_per_node, dataset_names=requested_set),
+        dataset_names,
+    )
 
     results = {
         "experiment": "frozen_expert_residual_multidataset",
+        "seed": int(seed),
         "architecture": {
             "description": "Frozen IQ and FFT experts, confidence-based expert anchor, bounded residual correction",
             "alpha_penalty": ALPHA_PENALTY,
             "delta_penalty": DELTA_PENALTY,
             "delta_scale": DELTA_SCALE,
         },
+        "requested_datasets": [dataset["name"] for dataset in datasets],
         "datasets": {},
     }
+    save_json(results_path, results)
 
     for dataset in datasets:
         dataset_start = time.perf_counter()
         dataset_results = run_dataset(dataset)
         dataset_results["runtime_seconds"] = time.perf_counter() - dataset_start
         results["datasets"][dataset["name"]] = dataset_results
+        save_json(results_path, results)
 
     results["runtime_seconds"] = time.perf_counter() - start
     save_json(results_path, results)
@@ -405,8 +489,20 @@ def main():
     parser = argparse.ArgumentParser(description="Run frozen-expert residual IQ+FFT fusion across all Experiment 5-comparable datasets.")
     parser.add_argument("--results-path", type=Path, default=RESULTS_PATH)
     parser.add_argument("--orbit-max-packets-per-node", type=int, default=256)
+    parser.add_argument("--seed", type=int, default=SEED)
+    parser.add_argument(
+        "--datasets",
+        nargs="+",
+        choices=DEFAULT_DATASET_ORDER,
+        help="Optional subset of datasets to run, in the order provided.",
+    )
     args = parser.parse_args()
-    run_experiment(results_path=args.results_path, orbit_max_packets_per_node=args.orbit_max_packets_per_node)
+    run_experiment(
+        results_path=args.results_path,
+        orbit_max_packets_per_node=args.orbit_max_packets_per_node,
+        seed=args.seed,
+        dataset_names=args.datasets,
+    )
 
 
 if __name__ == "__main__":
