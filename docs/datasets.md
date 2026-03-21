@@ -236,6 +236,7 @@ Observed center frequencies by class:
 Label caveat:
 
 - because labels come from presumed frequency occupancy rather than content verification, this dataset should be treated as a practical benchmark rather than a perfectly ground-truthed protocol-identification corpus
+- results on this dataset should therefore be interpreted more cautiously than results on the synthetic datasets or on cleaner externally labeled corpora
 
 ## Local Derived Datasets
 

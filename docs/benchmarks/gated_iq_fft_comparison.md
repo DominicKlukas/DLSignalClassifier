@@ -1,12 +1,12 @@
 # IQ vs FFT vs Gated IQ+FFT Comparisons Across Datasets
 
-This file collects the experiments that use the same core three-way comparison:
+This file collects benchmark entries that use the same core three-way comparison:
 
 - IQ time-domain CNN
 - FFT CNN
 - gated IQ+FFT multimodal CNN
 
-The entries below span any dataset where that same comparison is available, even when the result came from combining the IQ/FFT baseline run with the later gated-multimodal run on the same split.
+The entries below span any dataset where that same comparison is available, even when the result comes from combining an IQ/FFT baseline run with a separate gated-multimodal run on the same split.
 
 It excludes experiments that changed the model family beyond that comparison, such as:
 
@@ -14,6 +14,12 @@ It excludes experiments that changed the model family beyond that comparison, su
 - wavelet-augmented models
 - cross-attention models
 - AWGN curve sweeps rather than dataset-level benchmark runs
+
+Interpretation note:
+
+- this document is a benchmark summary assembled from comparable runs
+- it should not be read as a single monolithic experiment with one shared training script
+- the margins reported here are single-run results, not mean-and-variance estimates over repeated seeds
 
 ## Synthetic Modulation Dataset
 
@@ -44,6 +50,7 @@ Interpretation:
 - raw IQ is the correct representation for this task
 - FFT is mostly unhelpful on its own
 - the gated model learned to rely almost entirely on IQ, but still did not recover the pure time-CNN baseline
+- because this task is deliberately constructed to emphasize temporal structure, the result is best read as a controlled representation check rather than a claim about all modulation benchmarks
 
 Artifacts:
 
@@ -79,6 +86,7 @@ Interpretation:
 - the waveform-family task clearly benefits from multimodal fusion
 - FFT is the stronger single representation
 - the gated model leaned primarily on the fusion path, not the direct FFT-only head
+- because this task is deliberately constructed to emphasize time-frequency structure, the result is best read as a controlled representation check rather than a claim about all waveform benchmarks
 
 Artifacts:
 
@@ -239,6 +247,7 @@ Setup:
 - test: fifth day
 - packet cap: at most `256` packets per transmitter per day
 - sizes: `43742 / 14372 / 14643`
+- class set restricted to the transmitter IDs present across all five day files used locally
 
 Implementation:
 
@@ -258,6 +267,11 @@ Ranking:
 Artifact:
 
 - [results.json](../experiments/legacy/exp05_orbit_rf/results.json)
+
+Caveat:
+
+- because the local benchmark keeps only node IDs present across all five days, the task definition uses information from the full day set rather than from the training days alone
+- that makes this a practical within-repo benchmark, but not the cleanest possible train/validation/test protocol
 
 ## Captured `.npy` Dataset Re-Run
 

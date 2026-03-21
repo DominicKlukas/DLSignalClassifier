@@ -2,11 +2,11 @@
 
 This file is the canonical high-level experiment summary for the repo.
 
-The main result is a three-step progression:
+The main result is a three-step experimental progression:
 
 1. IQ and FFT each win on different synthetic tasks.
 2. A learned gated multimodal model helps, but does not reliably dominate the best single expert.
-3. A frozen-expert residual fusion model does achieve that stronger behavior across the comparable benchmark family.
+3. A frozen-expert residual fusion model empirically shows that stronger behavior in the kept benchmark suite for the reported run.
 
 ## Experiment 1: IQ vs FFT Representation Baselines
 
@@ -32,9 +32,9 @@ Result:
 
 Takeaway:
 
-- the two representations are not redundant
-- IQ is the right inductive bias for modulation-family
-- FFT is the stronger representation for waveform-family
+- the two representations are not redundant in these controlled synthetic tasks
+- IQ is the stronger inductive bias for modulation-family under this generator
+- FFT is the stronger representation for waveform-family under this generator
 
 This is the motivation for fusion.
 
@@ -56,6 +56,12 @@ Reference comparison set:
 
 - [gated_iq_fft_comparison.md](benchmarks/gated_iq_fft_comparison.md)
 
+Important scope note:
+
+- the synthetic rows come from the kept Experiment 2 runner
+- the real-data rows come from related legacy benchmark runs collected into one comparison document
+- so this section is best read as a comparable benchmark summary, not as a single uniform training sweep produced by one script
+
 Results across all datasets in this comparison family:
 
 - modulation-family: IQ `0.730`, FFT `0.193`, gated `0.680`
@@ -74,6 +80,7 @@ Takeaway:
 - on modulation-family, it still falls below the best individual expert
 - on Orbit RF, FFT remains the strongest model
 - on several real datasets, gated fusion is best but often only by a small margin
+- all of these comparisons are single reported runs, so the small margins should be interpreted cautiously
 
 So the experimental progression does not end at multimodal fusion alone.
 
@@ -108,13 +115,14 @@ Results across the full comparable benchmark family:
 
 Core result:
 
-- on every dataset in that benchmark family, the frozen-expert residual model matched or exceeded the best single expert in the same run
+- in the reported run, on every dataset in that benchmark family, the frozen-expert residual model matched or exceeded the best single expert measured in the same run
 
 Takeaway:
 
-- this is the architecture that resolves the main open question in the repo
+- this is the strongest architecture currently retained in the repo
 - it keeps the expert structure explicit
-- and it empirically achieves the stronger behavior that the gated model did not
+- and in this benchmark suite it empirically achieves the stronger behavior that the gated model did not
+- however, the evidence here is still based on single-seed runs rather than repeated-trial estimates
 
 ### RadioML 2018 Addendum
 
@@ -131,6 +139,7 @@ Interpretation:
 - this benchmark is clearly IQ-dominant in our runs
 - the frozen residual model only improves slightly over the IQ expert
 - but that full-data result is still in a competitive range relative to published RML2018.01A average-accuracy comparisons, which are often reported around the low-to-mid `60%` range for strong models
+- because the gain over IQ is small, this result is better read as evidence that the architecture remains competitive on an IQ-dominant benchmark than as evidence of strong multimodal complementarity
 
 References:
 
@@ -150,4 +159,4 @@ This is not part of the core experiment sequence, but it sharpens the interpreta
 
 - [correct_set_overlap.md](analysis/correct_set_overlap.md)
 
-That analysis shows the frozen model wins in total accuracy, but it does not literally preserve the full union of IQ-correct and FFT-correct samples on every dataset.
+That analysis shows the frozen model can win in total accuracy without literally preserving the full union of IQ-correct and FFT-correct samples on every dataset.

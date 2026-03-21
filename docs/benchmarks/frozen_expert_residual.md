@@ -10,7 +10,7 @@ The target hypothesis was:
 
 - adding the second modality should never make the model worse than the best single-mode expert in the same run
 
-This is not a claim of formal proof. It is an empirical test of whether a more conservative architecture can realize that behavior in practice.
+This is not a claim of formal proof. It is an empirical single-run test of whether a more conservative architecture can realize that behavior in practice on the retained benchmark suite.
 
 ## Architecture
 
@@ -55,6 +55,12 @@ This sweep used the same comparison family across:
 - augmented real Sub-GHz with `512` windows per file
 - Orbit RF identification
 - captured `.npy` real benchmark
+
+Benchmark caveats:
+
+- the ORBIT benchmark used a locally filtered class set consisting of node IDs present across all five day files
+- the captured benchmark uses labels assigned by presumed frequency occupancy rather than by decoder-confirmed content
+- so these results are best interpreted as strong within-repo evidence rather than as a fully uniform external benchmark suite
 
 ## Results
 
@@ -116,7 +122,7 @@ This sweep used the same comparison family across:
 
 ## Interpretation
 
-In this run, the empirical hypothesis held across all included datasets:
+In this reported run, the empirical hypothesis held across all included datasets:
 
 - the frozen-expert residual fusion model matched or exceeded the best single expert every time
 - in every dataset here, it strictly exceeded the best single expert by a small or large margin
@@ -135,7 +141,7 @@ The learned residual strength also fit the intuition behind the architecture:
 - on harder or more complementary tasks, the model used larger residual corrections
 - on the large real Sub-GHz run, the residual stayed very small and the model behaved almost like a safe expert fallback
 
-So the design appears to do what we wanted in practice:
+So the design appears to do what we wanted in practice for this run:
 
 - preserve strong single experts
 - allow fusion to help without forcing full symmetric mixing
@@ -148,19 +154,21 @@ What it shows is:
 
 - with this training recipe and these datasets, the conservative residual-fusion design was empirically better than the best single expert on every tested benchmark
 
-That is much stronger than the earlier symmetric gated model, but it is still an experimental result, not a theorem.
+That is stronger than the earlier symmetric gated model in this suite, but it is still a single-seed experimental result, not a theorem or a stability estimate.
 
 ## Conclusion
 
-Compared with the earlier gated multimodal architecture, the frozen-expert residual design is a clear improvement for this repo’s comparison family.
+Compared with the earlier gated multimodal architecture, the frozen-expert residual design is a promising improvement for this repo’s comparison family.
 
 The earlier gated model often helped, but did not reliably dominate the strongest single-mode baseline.
 
-This new design did better in the full multi-dataset sweep:
+This new design did better in the reported multi-dataset sweep:
 
 - it beat the best individual expert on all included datasets in this run
 - it produced especially large gains where multimodal complementarity was strong
 - and it degraded gracefully on datasets where one expert already dominated
+
+The main limitation is that these are still single reported runs. Small gains such as `+0.003` to `+0.006` on the real Sub-GHz variants should not be treated as stable without repeated-seed confirmation.
 
 ## Output Artifact
 
