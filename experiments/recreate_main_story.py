@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import time
 from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from experiments.exp01_iq_vs_fft.run import run_experiment as run_exp01
 from experiments.exp02_gated_multimodal.run import run_experiment as run_exp02

@@ -11,6 +11,7 @@ import numpy as np
 import torch
 from sklearn.model_selection import train_test_split
 from torch.amp import GradScaler, autocast
+from torch import nn
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
