@@ -4,7 +4,6 @@ These experiments build on the main project direction but are not part of the ca
 
 - `cross_attention_multidataset`: later fusion variant using IQ, FFT, and wavelet views
 - `radioml2018`: large-scale evaluation on RadioML 2018.01A
-- `radarcnn`: evaluation on the RadarCNN dataset
 - `occluded_objects`: additional follow-up branch kept for reference
 
 Each directory keeps its runner and its local results together.

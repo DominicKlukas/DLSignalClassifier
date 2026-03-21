@@ -66,13 +66,6 @@ def story_dependency_report() -> dict[str, dict[str, object]]:
             "description": "RadioML 2018.01A HDF5 file used by the follow-up benchmark.",
             "paths": [ROOT_DIR / "external" / "radioml_dataset" / "GOLD_XYZ_OSC.0001_1024.hdf5"],
         },
-        "radarcnn": {
-            "description": "RadarCNN extracted data or the original zip archive.",
-            "paths": [
-                ROOT_DIR / "external" / "radar_iq_datasets" / "data" / "radarcnn_unpacked" / "data",
-                ROOT_DIR / "external" / "radar_iq_datasets" / "data" / "radarcnn_dataset.zip",
-            ],
-        },
     }
 
     report: dict[str, dict[str, object]] = {}

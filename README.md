@@ -53,7 +53,6 @@ Requires external or local datasets:
 
 - `experiments/exp03_frozen_expert_residual`
 - `experiments/followups/radioml2018`
-- `experiments/followups/radarcnn`
 - `experiments/analysis/correct_set_overlap`
 - most of `experiments/legacy`
 
@@ -62,7 +61,6 @@ Requires external or local datasets:
 - `docs/`: experiment and dataset documentation
 - `dataset_prep/`: raw-data retrieval and conversion instructions
 - `experiments/`: runnable experiment code and results
-- `garbage_bin/`: preserved historical material intentionally removed from the main surface
 
 ## Notes
 

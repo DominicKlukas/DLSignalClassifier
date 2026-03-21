@@ -56,7 +56,6 @@ This prints which local datasets are present, which are missing, and which exper
 Follow-up work that extends the main fusion idea but is not part of the core experiment sequence now lives in:
 
 - `experiments/followups/radioml2018`
-- `experiments/followups/radarcnn`
 - `experiments/followups/occluded_objects`
 - `experiments/followups/cross_attention_multidataset`
 
