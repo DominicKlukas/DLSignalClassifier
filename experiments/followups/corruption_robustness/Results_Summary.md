@@ -35,9 +35,11 @@ Primary artifacts:
 
 1. Corruption augmentation changed the story substantially relative to clean-train evaluation.
 2. Multiview fusion is not uniformly beneficial; its value depends strongly on the dataset.
-3. `gated_multimodal_cnn` was the strongest model on `waveform_family`, `subghz_real_512`, and `captured_npy_real_128`.
-4. `frozen_expert_residual_fusion` was strongest on `orbit_rf` and improved over the best single expert on every tested corruption there.
-5. `modulation_family` remained IQ-dominant even with corruption augmentation; both fusion variants stayed below the IQ expert.
+3. The clearest pattern is that corruption-aware multiview training amplifies existing IQ/FFT complementarity rather than creating it from scratch.
+4. When one view was already dominant before corruption-aware training, fusion usually did not become newly superior afterward.
+5. `gated_multimodal_cnn` was the strongest model on `waveform_family`, `subghz_real_512`, and `captured_npy_real_128`.
+6. `frozen_expert_residual_fusion` was strongest on `orbit_rf` and improved over the best single expert on every tested corruption there.
+7. `modulation_family` remained IQ-dominant even with corruption augmentation; both fusion variants stayed below the IQ expert.
 
 ## Dataset-Level Summary
 
@@ -156,6 +158,7 @@ Interpretation:
 The corruption-augmented results support a more precise claim than "fusion always helps."
 
 - Fusion helps when the task contains exploitable view complementarity under corruption.
+- In this study, corruption-aware training mostly strengthened datasets where multiview structure was already useful, rather than rescuing datasets where fusion was weak to begin with.
 - The best fusion architecture depends on the task.
 - Gated fusion seems better when the problem rewards aggressive, input-dependent adaptation.
 - Frozen residual seems better when a stable expert-preserving correction is enough, as in this first `orbit_rf` run.
