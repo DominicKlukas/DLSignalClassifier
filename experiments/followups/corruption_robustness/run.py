@@ -36,11 +36,11 @@ from experiments.shared.story_models import ExpertCNN, FrozenExpertResidualFusio
 
 
 HERE = Path(__file__).resolve().parent
-RESULTS_PATH = HERE / "results.json"
-PLOTS_DIR = HERE / "plots"
+RESULTS_PATH = HERE / "results_clean.json"
 
 SEED = 0
 DATASET_CHOICES = ["waveform_family", "modulation_family"]
+TRAIN_REGIME_CHOICES = ["clean", "augmented"]
 BRANCH_DROPOUT = 0.10
 AUX_LOSS_WEIGHT = 0.25
 
@@ -189,6 +189,26 @@ def corrupt_signals(signals: np.ndarray, corruption_name: str, params: dict, see
     if corruption_name == "clipping":
         return apply_clipping(signals, params["threshold"])
     raise ValueError(f"Unknown corruption: {corruption_name}")
+
+
+def build_augmented_split(signals: np.ndarray, seed: int, clean_fraction: float = 0.2) -> tuple[np.ndarray, list[dict]]:
+    rng = make_rng(seed, offset=20_000)
+    augmented = np.empty_like(signals)
+    assignments: list[dict] = []
+    corruption_names = list(CORRUPTION_CONFIGS.keys())
+
+    for idx in range(signals.shape[0]):
+        if rng.random() < clean_fraction:
+            augmented[idx] = signals[idx]
+            assignments.append({"corruption": "clean", "severity_label": "clean"})
+            continue
+
+        corruption_name = str(rng.choice(corruption_names))
+        choices = CORRUPTION_CONFIGS[corruption_name][1:]
+        params = dict(choices[int(rng.integers(0, len(choices)))])
+        augmented[idx : idx + 1] = corrupt_signals(signals[idx : idx + 1], corruption_name, params, seed + idx * 17)
+        assignments.append({"corruption": corruption_name, "severity_label": params["label"]})
+    return augmented, assignments
 
 
 def train_gated_fusion(
@@ -431,7 +451,7 @@ def plot_results(results: dict, output_dir: Path) -> list[str]:
     return saved
 
 
-def run_experiment(dataset_name: str, seed: int, results_path: Path) -> dict:
+def run_experiment(dataset_name: str, seed: int, results_path: Path, train_regime: str) -> dict:
     set_global_seed(seed)
     start = time.perf_counter()
 
@@ -446,11 +466,25 @@ def run_experiment(dataset_name: str, seed: int, results_path: Path) -> dict:
     epochs = dataset["epochs"]
     batch_size = dataset["batch_size"]
 
+    train_assignment_summary = None
+    val_assignment_summary = None
+    if train_regime == "augmented":
+        iq_train, train_assignments = build_augmented_split(iq_train, seed=seed + 1, clean_fraction=0.2)
+        iq_val, val_assignments = build_augmented_split(iq_val, seed=seed + 2, clean_fraction=0.2)
+        train_assignment_summary = {}
+        val_assignment_summary = {}
+        for item in train_assignments:
+            key = f"{item['corruption']}:{item['severity_label']}"
+            train_assignment_summary[key] = train_assignment_summary.get(key, 0) + 1
+        for item in val_assignments:
+            key = f"{item['corruption']}:{item['severity_label']}"
+            val_assignment_summary[key] = val_assignment_summary.get(key, 0) + 1
+
     fft_train = to_fft(iq_train)
     fft_val = to_fft(iq_val)
     fft_test = to_fft(iq_test)
 
-    print(f"\n=== Clean training on {dataset_name} ===")
+    print(f"\n=== {train_regime} training on {dataset_name} ===")
     iq_train_loader = make_loader(iq_train, y_train, True, torch.cuda.is_available(), batch_size)
     iq_val_loader = make_loader(iq_val, y_val, False, torch.cuda.is_available(), batch_size)
     iq_test_loader = make_loader(iq_test, y_test, False, torch.cuda.is_available(), batch_size)
@@ -515,18 +549,24 @@ def run_experiment(dataset_name: str, seed: int, results_path: Path) -> dict:
             )
         corruption_results[corruption_name] = entries
 
-    plot_paths = plot_results(corruption_results, PLOTS_DIR)
+    plot_dir = results_path.parent / f"{results_path.stem.replace('results_', 'plots_')}"
+    plot_paths = plot_results(corruption_results, plot_dir)
     results = {
         "experiment": "clean_train_corrupted_test_robustness",
         "dataset": dataset_name,
         "seed": seed,
-        "train_protocol": "clean_train_clean_val_corrupted_test",
+        "train_regime": train_regime,
+        "train_protocol": f"{train_regime}_train_{train_regime}_val_corrupted_test",
         "models": ["iq_cnn", "fft_cnn", "gated_multimodal_cnn", "frozen_expert_residual_fusion"],
         "corruption_results": corruption_results,
         "summary": summarize_corruption(corruption_results),
         "plot_paths": plot_paths,
         "runtime_seconds": time.perf_counter() - start,
     }
+    if train_assignment_summary is not None:
+        results["augmented_train_assignment_counts"] = train_assignment_summary
+    if val_assignment_summary is not None:
+        results["augmented_val_assignment_counts"] = val_assignment_summary
     save_json(results_path, results)
     print(f"Saved results to {results_path}")
     return results
@@ -536,9 +576,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run clean-train / corrupted-test robustness study for IQ, FFT, and fusion models.")
     parser.add_argument("--dataset", choices=DATASET_CHOICES, default="waveform_family")
     parser.add_argument("--seed", type=int, default=SEED)
+    parser.add_argument("--train-regime", choices=TRAIN_REGIME_CHOICES, default="clean")
     parser.add_argument("--results-path", type=Path, default=RESULTS_PATH)
     args = parser.parse_args()
-    run_experiment(dataset_name=args.dataset, seed=args.seed, results_path=args.results_path)
+    run_experiment(dataset_name=args.dataset, seed=args.seed, results_path=args.results_path, train_regime=args.train_regime)
 
 
 if __name__ == "__main__":
