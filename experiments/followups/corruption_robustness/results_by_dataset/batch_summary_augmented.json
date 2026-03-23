@@ -1,0 +1,572 @@
+{
+  "experiment": "corruption_robustness_batch",
+  "seed": 0,
+  "train_regime": "augmented",
+  "datasets": {
+    "modulation_family": {
+      "results_path": "experiments/followups/corruption_robustness/results_by_dataset/modulation_family/results_augmented.json",
+      "runtime_seconds": 34.25031248398591,
+      "summary": {
+        "awgn": {
+          "iq_cnn": {
+            "mean_test_acc": 0.532,
+            "min_test_acc": 0.21666666666666667,
+            "max_test_acc": 0.6666666666666666
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.16733333333333336,
+            "min_test_acc": 0.14666666666666667,
+            "max_test_acc": 0.18
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.48533333333333334,
+            "min_test_acc": 0.16333333333333333,
+            "max_test_acc": 0.6166666666666667
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.4573333333333333,
+            "min_test_acc": 0.19666666666666666,
+            "max_test_acc": 0.5733333333333334
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.07466666666666669,
+            "min": -0.10333333333333339,
+            "max": -0.020000000000000018
+          }
+        },
+        "impulse_noise": {
+          "iq_cnn": {
+            "mean_test_acc": 0.5826666666666667,
+            "min_test_acc": 0.45666666666666667,
+            "max_test_acc": 0.6666666666666666
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.16399999999999998,
+            "min_test_acc": 0.14333333333333334,
+            "max_test_acc": 0.17666666666666667
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.5266666666666666,
+            "min_test_acc": 0.37,
+            "max_test_acc": 0.6133333333333333
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.47333333333333333,
+            "min_test_acc": 0.3233333333333333,
+            "max_test_acc": 0.5733333333333334
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.10933333333333332,
+            "min": -0.14333333333333337,
+            "max": -0.08666666666666667
+          }
+        },
+        "narrowband_interferer": {
+          "iq_cnn": {
+            "mean_test_acc": 0.38066666666666665,
+            "min_test_acc": 0.12666666666666668,
+            "max_test_acc": 0.6666666666666666
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.16466666666666666,
+            "min_test_acc": 0.13333333333333333,
+            "max_test_acc": 0.18666666666666668
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.35733333333333334,
+            "min_test_acc": 0.19,
+            "max_test_acc": 0.6133333333333333
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.348,
+            "min_test_acc": 0.15333333333333332,
+            "max_test_acc": 0.5733333333333334
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.04466666666666667,
+            "min": -0.09333333333333327,
+            "max": 0.006666666666666682
+          }
+        },
+        "sample_rate_distortion": {
+          "iq_cnn": {
+            "mean_test_acc": 0.6213333333333334,
+            "min_test_acc": 0.5966666666666667,
+            "max_test_acc": 0.6666666666666666
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.15133333333333335,
+            "min_test_acc": 0.12333333333333334,
+            "max_test_acc": 0.17666666666666667
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.5893333333333334,
+            "min_test_acc": 0.5666666666666667,
+            "max_test_acc": 0.6166666666666667
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.4926666666666666,
+            "min_test_acc": 0.44333333333333336,
+            "max_test_acc": 0.5733333333333334
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.12866666666666665,
+            "min": -0.15333333333333332,
+            "max": -0.09333333333333327
+          }
+        },
+        "clipping": {
+          "iq_cnn": {
+            "mean_test_acc": 0.5353333333333333,
+            "min_test_acc": 0.4266666666666667,
+            "max_test_acc": 0.6666666666666666
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.18866666666666668,
+            "min_test_acc": 0.17666666666666667,
+            "max_test_acc": 0.2
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.42733333333333334,
+            "min_test_acc": 0.31666666666666665,
+            "max_test_acc": 0.6133333333333333
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.4786666666666667,
+            "min_test_acc": 0.4,
+            "max_test_acc": 0.5733333333333334
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.05666666666666664,
+            "min": -0.09333333333333327,
+            "max": -0.026666666666666672
+          }
+        }
+      }
+    },
+    "subghz_real_512": {
+      "results_path": "experiments/followups/corruption_robustness/results_by_dataset/subghz_real_512/results_augmented.json",
+      "runtime_seconds": 197.61053931503557,
+      "summary": {
+        "awgn": {
+          "iq_cnn": {
+            "mean_test_acc": 0.795875,
+            "min_test_acc": 0.741953125,
+            "max_test_acc": 0.8175
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.718375,
+            "min_test_acc": 0.478671875,
+            "max_test_acc": 0.805625
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8004687500000001,
+            "min_test_acc": 0.7359375,
+            "max_test_acc": 0.8203125
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.7901874999999999,
+            "min_test_acc": 0.710625,
+            "max_test_acc": 0.819765625
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.005687500000000001,
+            "min": -0.03132812500000004,
+            "max": 0.002343749999999978
+          }
+        },
+        "impulse_noise": {
+          "iq_cnn": {
+            "mean_test_acc": 0.811890625,
+            "min_test_acc": 0.8,
+            "max_test_acc": 0.8175
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.7659374999999999,
+            "min_test_acc": 0.710625,
+            "max_test_acc": 0.805234375
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8154375,
+            "min_test_acc": 0.8028125,
+            "max_test_acc": 0.8203125
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.8108281249999999,
+            "min_test_acc": 0.7965625,
+            "max_test_acc": 0.819765625
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.0010624999999999884,
+            "min": -0.0034375000000000933,
+            "max": 0.002265625000000049
+          }
+        },
+        "narrowband_interferer": {
+          "iq_cnn": {
+            "mean_test_acc": 0.7983437499999999,
+            "min_test_acc": 0.780546875,
+            "max_test_acc": 0.8175
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.763265625,
+            "min_test_acc": 0.709140625,
+            "max_test_acc": 0.805234375
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8018750000000001,
+            "min_test_acc": 0.765390625,
+            "max_test_acc": 0.8203125
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.798234375,
+            "min_test_acc": 0.771875,
+            "max_test_acc": 0.819765625
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.00010937499999996714,
+            "min": -0.008671874999999996,
+            "max": 0.0048437500000000355
+          }
+        },
+        "sample_rate_distortion": {
+          "iq_cnn": {
+            "mean_test_acc": 0.79871875,
+            "min_test_acc": 0.79140625,
+            "max_test_acc": 0.8175
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.79428125,
+            "min_test_acc": 0.788828125,
+            "max_test_acc": 0.805234375
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8123125,
+            "min_test_acc": 0.807578125,
+            "max_test_acc": 0.8203125
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.808421875,
+            "min_test_acc": 0.8,
+            "max_test_acc": 0.819765625
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.009546875,
+            "min": 0.002265625000000049,
+            "max": 0.014687499999999964
+          }
+        },
+        "clipping": {
+          "iq_cnn": {
+            "mean_test_acc": 0.8158593749999999,
+            "min_test_acc": 0.81453125,
+            "max_test_acc": 0.8175
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.8040312499999999,
+            "min_test_acc": 0.80203125,
+            "max_test_acc": 0.805234375
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.819953125,
+            "min_test_acc": 0.819140625,
+            "max_test_acc": 0.8203125
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.818859375,
+            "min_test_acc": 0.817734375,
+            "max_test_acc": 0.819765625
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.0029999999999999805,
+            "min": 0.002265625000000049,
+            "max": 0.0034374999999999822
+          }
+        }
+      }
+    },
+    "captured_npy_real_128": {
+      "results_path": "experiments/followups/corruption_robustness/results_by_dataset/captured_npy_real_128/results_augmented.json",
+      "runtime_seconds": 435.6656024810509,
+      "summary": {
+        "awgn": {
+          "iq_cnn": {
+            "mean_test_acc": 0.7718036529680365,
+            "min_test_acc": 0.3180293949771689,
+            "max_test_acc": 0.9265482305936074
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.6450057077625571,
+            "min_test_acc": 0.2652325913242009,
+            "max_test_acc": 0.7818207762557078
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8225099885844749,
+            "min_test_acc": 0.4404252283105023,
+            "max_test_acc": 0.9533390410958904
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.77537100456621,
+            "min_test_acc": 0.3194920091324201,
+            "max_test_acc": 0.929009703196347
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.003567351598173496,
+            "min": 0.001462614155251174,
+            "max": 0.009346461187214605
+          }
+        },
+        "impulse_noise": {
+          "iq_cnn": {
+            "mean_test_acc": 0.9137628424657536,
+            "min_test_acc": 0.8819563356164384,
+            "max_test_acc": 0.9265482305936074
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.7155393835616437,
+            "min_test_acc": 0.5855807648401826,
+            "max_test_acc": 0.7818207762557078
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.9342465753424658,
+            "min_test_acc": 0.8887699771689498,
+            "max_test_acc": 0.9533390410958904
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.9113441780821917,
+            "min_test_acc": 0.8698986872146118,
+            "max_test_acc": 0.929009703196347
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.002418664383561686,
+            "min": -0.012057648401826548,
+            "max": 0.0024971461187214272
+          }
+        },
+        "narrowband_interferer": {
+          "iq_cnn": {
+            "mean_test_acc": 0.7767979452054796,
+            "min_test_acc": 0.5795162671232876,
+            "max_test_acc": 0.9265482305936074
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.6145547945205478,
+            "min_test_acc": 0.4996432648401826,
+            "max_test_acc": 0.7818207762557078
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.8365368150684931,
+            "min_test_acc": 0.6797588470319634,
+            "max_test_acc": 0.9533390410958904
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.7689283675799086,
+            "min_test_acc": 0.5761272831050228,
+            "max_test_acc": 0.929009703196347
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.007869577625570789,
+            "min": -0.027432933789954372,
+            "max": 0.006599600456621002
+          }
+        },
+        "sample_rate_distortion": {
+          "iq_cnn": {
+            "mean_test_acc": 0.8950627853881279,
+            "min_test_acc": 0.8351883561643836,
+            "max_test_acc": 0.9265482305936074
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.748152111872146,
+            "min_test_acc": 0.732769691780822,
+            "max_test_acc": 0.7818207762557078
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.9323772831050228,
+            "min_test_acc": 0.90275399543379,
+            "max_test_acc": 0.9533390410958904
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.8990867579908676,
+            "min_test_acc": 0.8547374429223744,
+            "max_test_acc": 0.929009703196347
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.004023972602739701,
+            "min": -0.004708904109589018,
+            "max": 0.01954908675799083
+          }
+        },
+        "clipping": {
+          "iq_cnn": {
+            "mean_test_acc": 0.8904894406392694,
+            "min_test_acc": 0.8467822488584474,
+            "max_test_acc": 0.9265482305936074
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.768421803652968,
+            "min_test_acc": 0.744755993150685,
+            "max_test_acc": 0.7818207762557078
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.9302796803652967,
+            "min_test_acc": 0.9071775114155252,
+            "max_test_acc": 0.9533390410958904
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.8850599315068493,
+            "min_test_acc": 0.8374001141552512,
+            "max_test_acc": 0.929009703196347
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": -0.005429509132420107,
+            "min": -0.010024257990867591,
+            "max": 0.002461472602739656
+          }
+        }
+      }
+    },
+    "orbit_rf": {
+      "results_path": "experiments/followups/corruption_robustness/results_by_dataset/orbit_rf/results_augmented.json",
+      "runtime_seconds": 173.3379452789668,
+      "summary": {
+        "awgn": {
+          "iq_cnn": {
+            "mean_test_acc": 0.5056067745680529,
+            "min_test_acc": 0.054701905347264906,
+            "max_test_acc": 0.6724031960663799
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.496305401898518,
+            "min_test_acc": 0.02451683398210749,
+            "max_test_acc": 0.7114662295977601
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.5344533224066106,
+            "min_test_acc": 0.060028682646998566,
+            "max_test_acc": 0.6882469439322543
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.5382913337430855,
+            "min_test_acc": 0.05265314484736734,
+            "max_test_acc": 0.727446561496961
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.01483302601925834,
+            "min": -0.0020487604998975645,
+            "max": 0.02738509868196415
+          }
+        },
+        "impulse_noise": {
+          "iq_cnn": {
+            "mean_test_acc": 0.6646452229734343,
+            "min_test_acc": 0.6440620091511302,
+            "max_test_acc": 0.6713105237997679
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.5779007034077717,
+            "min_test_acc": 0.29829952878508503,
+            "max_test_acc": 0.7114662295977601
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.6779621662227686,
+            "min_test_acc": 0.645632725534385,
+            "max_test_acc": 0.6883152359489175
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.6972205149218056,
+            "min_test_acc": 0.645086389401079,
+            "max_test_acc": 0.727446561496961
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.018548111725739225,
+            "min": 0.0010243802499487753,
+            "max": 0.03476063648159522
+          }
+        },
+        "narrowband_interferer": {
+          "iq_cnn": {
+            "mean_test_acc": 0.531858225773407,
+            "min_test_acc": 0.322406610667213,
+            "max_test_acc": 0.6698080994331762
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.49765758382845054,
+            "min_test_acc": 0.1635593799084887,
+            "max_test_acc": 0.7114662295977601
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.658881376767056,
+            "min_test_acc": 0.5677115345216144,
+            "max_test_acc": 0.6911835006487742
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.5712763777914361,
+            "min_test_acc": 0.3260260875503654,
+            "max_test_acc": 0.727446561496961
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.021716861298914137,
+            "min": 0.003619476883152395,
+            "max": 0.0455507751143891
+          }
+        },
+        "sample_rate_distortion": {
+          "iq_cnn": {
+            "mean_test_acc": 0.6506453595574678,
+            "min_test_acc": 0.628832889435225,
+            "max_test_acc": 0.6698080994331762
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.6312640852284368,
+            "min_test_acc": 0.5914088643037629,
+            "max_test_acc": 0.7114662295977601
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.6775250973161238,
+            "min_test_acc": 0.6585399166837397,
+            "max_test_acc": 0.6872908556989688
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.6795328826060234,
+            "min_test_acc": 0.6466571057843338,
+            "max_test_acc": 0.727446561496961
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.020105169705661362,
+            "min": 0.014614491565935972,
+            "max": 0.03728744109813553
+          }
+        },
+        "clipping": {
+          "iq_cnn": {
+            "mean_test_acc": 0.6615037902069247,
+            "min_test_acc": 0.6205695554189715,
+            "max_test_acc": 0.6782763094994195
+          },
+          "fft_cnn": {
+            "mean_test_acc": 0.6870996380523117,
+            "min_test_acc": 0.6399644881513351,
+            "max_test_acc": 0.7114662295977601
+          },
+          "gated_multimodal_cnn": {
+            "mean_test_acc": 0.6893669330055318,
+            "min_test_acc": 0.676773885132828,
+            "max_test_acc": 0.6960322338318651
+          },
+          "frozen_expert_residual_fusion": {
+            "mean_test_acc": 0.7134330396776617,
+            "min_test_acc": 0.677593389332787,
+            "max_test_acc": 0.727446561496961
+          },
+          "frozen_delta_vs_best_single": {
+            "mean": 0.026333401625349983,
+            "min": 0.015980331899200895,
+            "max": 0.0376289011814519
+          }
+        }
+      }
+    }
+  },
+  "runtime_seconds": 840.8644120739773
+}

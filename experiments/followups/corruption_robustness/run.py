@@ -20,10 +20,17 @@ if str(ROOT_DIR) not in sys.path:
 
 
 from experiments.exp03_frozen_expert_residual.run import (  # noqa: E402
+    CAPTURED_TEST_PATH,
+    CAPTURED_TRAIN_PATH,
+    CAPTURED_VAL_PATH,
     DELTA_SCALE,
     LABEL_SMOOTHING,
     LEARNING_RATE,
+    REAL_TEST_PATH,
+    REAL_TRAIN_PATH,
+    REAL_VAL_PATH,
     WEIGHT_DECAY,
+    build_h5_dataset,
     compute_residual_loss,
     make_loader,
     make_pair_loader,
@@ -31,15 +38,22 @@ from experiments.exp03_frozen_expert_residual.run import (  # noqa: E402
     train_single_expert,
 )
 from experiments.shared.repro import classification_metrics, configure_device, save_json, set_global_seed  # noqa: E402
-from experiments.shared.story_datasets import load_modulation_dataset, load_waveform_dataset, to_fft  # noqa: E402
+from experiments.shared.story_datasets import load_modulation_dataset, load_orbit_dataset, load_waveform_dataset, to_fft  # noqa: E402
 from experiments.shared.story_models import ExpertCNN, FrozenExpertResidualFusion, GatedMultimodalIQFFTCNN  # noqa: E402
 
 
 HERE = Path(__file__).resolve().parent
 RESULTS_PATH = HERE / "results_clean.json"
+DEFAULT_RESULTS_DIR = HERE / "results_by_dataset"
 
 SEED = 0
-DATASET_CHOICES = ["waveform_family", "modulation_family"]
+DATASET_CHOICES = [
+    "waveform_family",
+    "modulation_family",
+    "subghz_real_512",
+    "captured_npy_real_128",
+    "orbit_rf",
+]
 TRAIN_REGIME_CHOICES = ["clean", "augmented"]
 BRANCH_DROPOUT = 0.10
 AUX_LOSS_WEIGHT = 0.25
@@ -392,7 +406,36 @@ def load_dataset(name: str) -> dict:
         dataset["epochs"] = 40
         dataset["batch_size"] = 128
         return dataset
+    if name == "subghz_real_512":
+        return build_h5_dataset(
+            "subghz_real_512",
+            REAL_TRAIN_PATH,
+            REAL_VAL_PATH,
+            REAL_TEST_PATH,
+            max_windows_per_file=512,
+            batch_size=256,
+            epochs=20,
+        )
+    if name == "captured_npy_real_128":
+        return build_h5_dataset(
+            "captured_npy_real_128",
+            CAPTURED_TRAIN_PATH,
+            CAPTURED_VAL_PATH,
+            CAPTURED_TEST_PATH,
+            max_windows_per_file=128,
+            batch_size=256,
+            epochs=20,
+        )
+    if name == "orbit_rf":
+        dataset = load_orbit_dataset(max_packets_per_node=256)
+        dataset["epochs"] = 20
+        dataset["batch_size"] = 256
+        return dataset
     raise ValueError(f"Unsupported dataset: {name}")
+
+
+def default_results_path(dataset_name: str, train_regime: str, results_dir: Path = DEFAULT_RESULTS_DIR) -> Path:
+    return results_dir / dataset_name / f"results_{train_regime}.json"
 
 
 def summarize_corruption(results: dict) -> dict:
@@ -572,13 +615,42 @@ def run_experiment(dataset_name: str, seed: int, results_path: Path, train_regim
     return results
 
 
+def run_batch(dataset_names: list[str], seed: int, train_regime: str, results_dir: Path) -> dict:
+    batch_start = time.perf_counter()
+    summary = {
+        "experiment": "corruption_robustness_batch",
+        "seed": seed,
+        "train_regime": train_regime,
+        "datasets": {},
+    }
+    for dataset_name in dataset_names:
+        dataset_start = time.perf_counter()
+        results_path = default_results_path(dataset_name, train_regime, results_dir)
+        result = run_experiment(dataset_name=dataset_name, seed=seed, results_path=results_path, train_regime=train_regime)
+        summary["datasets"][dataset_name] = {
+            "results_path": str(results_path),
+            "runtime_seconds": time.perf_counter() - dataset_start,
+            "summary": result["summary"],
+        }
+    summary["runtime_seconds"] = time.perf_counter() - batch_start
+    summary_path = results_dir / f"batch_summary_{train_regime}.json"
+    save_json(summary_path, summary)
+    print(f"Saved batch summary to {summary_path}")
+    return summary
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run clean-train / corrupted-test robustness study for IQ, FFT, and fusion models.")
     parser.add_argument("--dataset", choices=DATASET_CHOICES, default="waveform_family")
+    parser.add_argument("--datasets", nargs="+", choices=DATASET_CHOICES, help="Optional list of datasets to run sequentially.")
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--train-regime", choices=TRAIN_REGIME_CHOICES, default="clean")
     parser.add_argument("--results-path", type=Path, default=RESULTS_PATH)
+    parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS_DIR)
     args = parser.parse_args()
+    if args.datasets:
+        run_batch(dataset_names=args.datasets, seed=args.seed, train_regime=args.train_regime, results_dir=args.results_dir)
+        return
     run_experiment(dataset_name=args.dataset, seed=args.seed, results_path=args.results_path, train_regime=args.train_regime)
 
 
