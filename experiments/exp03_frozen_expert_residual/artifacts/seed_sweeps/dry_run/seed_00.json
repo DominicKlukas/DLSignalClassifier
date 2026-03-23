@@ -1,0 +1,66 @@
+{
+  "experiment": "frozen_expert_residual_multidataset",
+  "seed": 0,
+  "architecture": {
+    "description": "Frozen IQ and FFT experts, confidence-based expert anchor, bounded residual correction",
+    "alpha_penalty": 0.01,
+    "delta_penalty": 0.001,
+    "delta_scale": 2.0
+  },
+  "requested_datasets": [
+    "subghz_real_128"
+  ],
+  "datasets": {
+    "subghz_real_128": {
+      "train_examples": 9600,
+      "val_examples": 3200,
+      "test_examples": 3200,
+      "signal_length": 1024,
+      "class_names": [
+        "80211ah",
+        "802154g",
+        "Lora",
+        "Noise",
+        "Sigfox",
+        "sunOFDM"
+      ],
+      "batch_size": 256,
+      "epochs": 20,
+      "max_windows_per_file": 128,
+      "train_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/train.h5",
+      "val_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/val.h5",
+      "test_path": "/home/klukasdh/Projects/DLSignalClassifier/data/real_mat_dataset/test.h5",
+      "iq_cnn": {
+        "best_epoch": 13,
+        "val_acc": 0.7953125,
+        "test_acc": 0.81375,
+        "macro_f1": 0.6138178404862243,
+        "weighted_f1": 0.7940438147272527
+      },
+      "fft_cnn": {
+        "best_epoch": 9,
+        "val_acc": 0.7559375,
+        "test_acc": 0.7740625,
+        "macro_f1": 0.40851645478930015,
+        "weighted_f1": 0.7317301283975004
+      },
+      "frozen_expert_residual_fusion": {
+        "best_epoch": 5,
+        "val_acc": 0.7953125,
+        "test_alpha_mean": 0.36224609375,
+        "test_iq_anchor_fraction": 0.5984375,
+        "best_val_alpha_mean": 0.37265625,
+        "best_val_iq_anchor_fraction": 0.6121875,
+        "test_acc": 0.8125,
+        "macro_f1": 0.6123735119337017,
+        "weighted_f1": 0.7917427348285454
+      },
+      "best_single_test_acc": 0.81375,
+      "improves_over_best_single": false,
+      "matches_or_beats_best_single": false,
+      "delta_vs_best_single": -0.0012499999999999734,
+      "runtime_seconds": 30.45867450899823
+    }
+  },
+  "runtime_seconds": 32.50558453800113
+}

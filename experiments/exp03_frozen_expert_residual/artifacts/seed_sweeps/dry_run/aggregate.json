@@ -1,0 +1,114 @@
+{
+  "experiment": "exp03_frozen_expert_residual_seed_sweep",
+  "datasets": [
+    "subghz_real_128"
+  ],
+  "seeds_requested": [
+    0
+  ],
+  "completed_seeds": [
+    0
+  ],
+  "seed_results": {
+    "0": "/home/klukasdh/Projects/DLSignalClassifier/experiments/exp03_frozen_expert_residual/artifacts/seed_sweeps/dry_run/seed_00.json"
+  },
+  "summary": {
+    "subghz_real_128": {
+      "iq_cnn": {
+        "test_acc": {
+          "count": 1,
+          "mean": 0.81375,
+          "std": 0.0,
+          "min": 0.81375,
+          "max": 0.81375,
+          "ci95_half_width": 0.0
+        },
+        "macro_f1": {
+          "count": 1,
+          "mean": 0.6138178404862243,
+          "std": 0.0,
+          "min": 0.6138178404862243,
+          "max": 0.6138178404862243,
+          "ci95_half_width": 0.0
+        },
+        "weighted_f1": {
+          "count": 1,
+          "mean": 0.7940438147272527,
+          "std": 0.0,
+          "min": 0.7940438147272527,
+          "max": 0.7940438147272527,
+          "ci95_half_width": 0.0
+        }
+      },
+      "fft_cnn": {
+        "test_acc": {
+          "count": 1,
+          "mean": 0.7740625,
+          "std": 0.0,
+          "min": 0.7740625,
+          "max": 0.7740625,
+          "ci95_half_width": 0.0
+        },
+        "macro_f1": {
+          "count": 1,
+          "mean": 0.40851645478930015,
+          "std": 0.0,
+          "min": 0.40851645478930015,
+          "max": 0.40851645478930015,
+          "ci95_half_width": 0.0
+        },
+        "weighted_f1": {
+          "count": 1,
+          "mean": 0.7317301283975004,
+          "std": 0.0,
+          "min": 0.7317301283975004,
+          "max": 0.7317301283975004,
+          "ci95_half_width": 0.0
+        }
+      },
+      "frozen_expert_residual_fusion": {
+        "test_acc": {
+          "count": 1,
+          "mean": 0.8125,
+          "std": 0.0,
+          "min": 0.8125,
+          "max": 0.8125,
+          "ci95_half_width": 0.0
+        },
+        "macro_f1": {
+          "count": 1,
+          "mean": 0.6123735119337017,
+          "std": 0.0,
+          "min": 0.6123735119337017,
+          "max": 0.6123735119337017,
+          "ci95_half_width": 0.0
+        },
+        "weighted_f1": {
+          "count": 1,
+          "mean": 0.7917427348285454,
+          "std": 0.0,
+          "min": 0.7917427348285454,
+          "max": 0.7917427348285454,
+          "ci95_half_width": 0.0
+        }
+      },
+      "best_single_test_acc": {
+        "count": 1,
+        "mean": 0.81375,
+        "std": 0.0,
+        "min": 0.81375,
+        "max": 0.81375,
+        "ci95_half_width": 0.0
+      },
+      "delta_vs_best_single": {
+        "count": 1,
+        "mean": -0.0012499999999999734,
+        "std": 0.0,
+        "min": -0.0012499999999999734,
+        "max": -0.0012499999999999734,
+        "ci95_half_width": 0.0
+      }
+    }
+  },
+  "num_completed_seeds": 1
+}
