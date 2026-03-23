@@ -1,0 +1,111 @@
+{
+  "experiment": "frozen_expert_residual_multidataset",
+  "seed": 0,
+  "architecture": {
+    "description": "Frozen IQ and FFT experts, confidence-based expert anchor, bounded residual correction",
+    "alpha_penalty": 0.01,
+    "delta_penalty": 0.001,
+    "delta_scale": 2.0
+  },
+  "requested_datasets": [
+    "modulation_family",
+    "waveform_family"
+  ],
+  "datasets": {
+    "modulation_family": {
+      "train_examples": 2400,
+      "val_examples": 300,
+      "test_examples": 300,
+      "signal_length": 1024,
+      "class_names": [
+        "BPSK",
+        "QPSK",
+        "8PSK",
+        "16QAM",
+        "64QAM",
+        "PAM4"
+      ],
+      "batch_size": 128,
+      "epochs": 40,
+      "iq_cnn": {
+        "best_epoch": 23,
+        "val_acc": 0.7333333333333333,
+        "test_acc": 0.7366666666666667,
+        "macro_f1": 0.731658815336564,
+        "weighted_f1": 0.7316588153365639
+      },
+      "fft_cnn": {
+        "best_epoch": 13,
+        "val_acc": 0.18666666666666668,
+        "test_acc": 0.15333333333333332,
+        "macro_f1": 0.14462301561078142,
+        "weighted_f1": 0.14462301561078142
+      },
+      "frozen_expert_residual_fusion": {
+        "best_epoch": 1,
+        "val_acc": 0.7133333333333334,
+        "test_alpha_mean": 0.4677604166666667,
+        "test_iq_anchor_fraction": 0.98,
+        "best_val_alpha_mean": 0.46807291666666667,
+        "best_val_iq_anchor_fraction": 0.97,
+        "test_acc": 0.7166666666666667,
+        "macro_f1": 0.7147045910325192,
+        "weighted_f1": 0.7147045910325192
+      },
+      "best_single_test_acc": 0.7366666666666667,
+      "improves_over_best_single": false,
+      "matches_or_beats_best_single": false,
+      "delta_vs_best_single": -0.020000000000000018,
+      "runtime_seconds": 6.982474419055507
+    },
+    "waveform_family": {
+      "train_examples": 3200,
+      "val_examples": 400,
+      "test_examples": 400,
+      "signal_length": 1024,
+      "class_names": [
+        "CW",
+        "AM",
+        "FM",
+        "OFDM",
+        "LFM_CHIRP",
+        "DSSS",
+        "FHSS",
+        "SC_BURST"
+      ],
+      "batch_size": 128,
+      "epochs": 40,
+      "iq_cnn": {
+        "best_epoch": 26,
+        "val_acc": 0.5725,
+        "test_acc": 0.5725,
+        "macro_f1": 0.5669054956089674,
+        "weighted_f1": 0.5669054956089675
+      },
+      "fft_cnn": {
+        "best_epoch": 23,
+        "val_acc": 0.7475,
+        "test_acc": 0.7375,
+        "macro_f1": 0.7363516201811329,
+        "weighted_f1": 0.7363516201811328
+      },
+      "frozen_expert_residual_fusion": {
+        "best_epoch": 9,
+        "val_acc": 0.885,
+        "test_alpha_mean": 0.797890625,
+        "test_iq_anchor_fraction": 0.4075,
+        "best_val_alpha_mean": 0.80484375,
+        "best_val_iq_anchor_fraction": 0.395,
+        "test_acc": 0.8875,
+        "macro_f1": 0.8888915247773201,
+        "weighted_f1": 0.8888915247773201
+      },
+      "best_single_test_acc": 0.7375,
+      "improves_over_best_single": true,
+      "matches_or_beats_best_single": true,
+      "delta_vs_best_single": 0.1499999999999999,
+      "runtime_seconds": 7.863958637986798
+    }
+  },
+  "runtime_seconds": 15.089566460985225
+}
