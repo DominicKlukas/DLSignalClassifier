@@ -18,6 +18,14 @@ orbit_rf_identification_dataset_updated/
 # Generated experiment artifacts that are too large for GitHub
 experiments/**/__pycache__/
 experiments/experiment1/*.h5
+experiments/followups/*/artifacts/*.pt
+experiments/followups/*/artifacts/*.h5
+experiments/followups/*/artifacts/*.json
+experiments/followups/*/artifacts/*.png
+experiments/followups/*/artifacts/**/*.pt
+experiments/followups/*/artifacts/**/*.h5
+experiments/followups/*/artifacts/**/*.json
+experiments/followups/*/artifacts/**/*.png
 
 # OS/editor clutter
 .DS_Store
